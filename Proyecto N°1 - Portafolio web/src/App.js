@@ -1,16 +1,18 @@
-import './App.css';
+import "./App.css";
 
-function alerta(){
+function alerta() {
   alert("Sos un trolaso!");
 }
 
 function App() {
   return (
-    <div className='Contenedor1'>
-      <h1>Hola a  todos</h1>
-      <h2>Tetas</h2>
-      <buttoN onClick={alerta}>Apretame</buttoN>
-      <section></section>
+    <div className="contenedor1 glass-effect">
+      <div className="contenedorFoto">
+        <img className="foto" src="https://pymstatic.com/5844/conversions/personas-emocionales-wide_webp.webp"></img>
+      </div>
+      <div className="contenedorInfo">
+        <h2>SANTINO SCAMPONE GARCIA</h2>
+      </div>
     </div>
   );
 }

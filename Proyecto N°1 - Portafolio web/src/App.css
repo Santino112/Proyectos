@@ -6,19 +6,42 @@
 
 html, body {
   min-height: 100vh;
-  margin: 0;
-  padding: 0;
 }
 
 body{
   background: linear-gradient(#00064A 0%, #000000 76%) no-repeat;
 }
 
-.Contenedor1{
-  background-color: black;
-  text-align: center;
-  margin: auto;
+.contenedor1{
+  display: grid;
+  grid-template-columns: 0.4fr 1fr;
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 65%;
+  height: 60%;
   color: white;
-  width: 50%;
-  padding: 3vh;
+  border: 2px solid red;
+}
+
+.glass-effect{
+  background: linear-gradient(#00064a14 0%, #0000001a 76%) no-repeat;
+  backdrop-filter: blur(0.4rem);
+  -webkit-backdrop-filter: blur(0.4rem);
+}
+
+.contenedorFoto{
+  border: 2px solid red;
+}
+
+.contenedorInfo{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+img{
+  max-width: 100%;
+  height: 100%;
 }
