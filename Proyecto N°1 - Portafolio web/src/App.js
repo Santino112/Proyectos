@@ -4,27 +4,27 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 function App() {
   return (
-    <div className="contenedorCentralizador">
-      <div className="d-sm-flex contenedor1 gap-2">
-        <div className="d-flex justify-content-center align-content-center container-sm">
+    <>
+      <div className="d-sm-flex contenedor1">
+        <div className="d-flex justify-content-center align-content-center container-fluid">
           <div className="contenedorImagenPersonal">
             <img
-              className=" imagenPersonal"
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2abXjqlWF455OcTVmrfUfqCsOwCK8lmRukA&s"
+              className="img-fluid rounded-pill shadow-lg"
+              src="\Images\WhatsApp_Image_2024-02-06_at_20.36.19-removebg-preview.png"
             ></img>
           </div>
         </div>
-        <div className="d-sm-flex flex-column justify-content-start contenedorInfo">
-          <h2 className="text-center text-sm-start fs-2">
+        <div className="d-sm-flex flex-column justify-content-end contenedorInfo">
+          <h2 className="text-center text-sm-start fs-1 fs-md-2 fs-lg-1">
             SANTINO SCAMPONE GARCIA
           </h2>
-          <div className="contenedorInfoPersonal contenedor-sm">
-            <p className="text-center text-sm-start fs-4">
-              Analista de sistemas y desarrollador web. Apasionado por la
+          <div className="contenedorInfoPersonal">
+            <p className="text-center text-sm-start fs-2 fs-md-2 fs-lg-1">
+              Analísta de sistemas y desarrollador web. Apasionado por la
               programación y la obtención de nuevas habilidades. Tecnologías con
               las que me llevo bien:
             </p>
-            <div className="d-sm-flex flex-wrap justify-content-start gap-2 contenedorIconos">
+            <div className="d-sm-flex flex-wrap justify-content-start gap-4 contenedorIconos">
               <svg
                 role="img"
                 viewBox="0 0 24 24"
@@ -73,16 +73,18 @@ function App() {
             </div>
           </div>
           <div className="d-sm-flex flex-wrap justify-content-start gap-4 contenedorBotones">
-            <button type="button" className="btn boton fs-5">
+            <button type="button" className="btn boton fs-4 fs-md-2 fs-lg-1">
               Curriculum
             </button>
-            <button type="button" className="btn boton fs-5">
+            <button type="button" className="btn boton fs-4 fs-md-2 fs-lg-1">
               Contacto
             </button>
           </div>
         </div>
       </div>
-    </div>
+      <div className="container-fluid contenedorProyectos">
+      </div>
+    </>
   );
 }
 
