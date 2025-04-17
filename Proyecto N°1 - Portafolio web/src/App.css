@@ -10,109 +10,127 @@
   font-style: normal;
 }
 
-html, body {
+body{
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Pleiades_large.jpg/1200px-Pleiades_large.jpg");
+  background-size: cover;   
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   min-height: 100vh;
 }
 
-body{
-  background: linear-gradient(#00064A 0%, #000000 76%) no-repeat;
-}
-
 .contenedor1{
-  position: fixed;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  border-radius: 8px;
+  backdrop-filter: blur(20px);
+  background-color: rgba(255, 255, 255, 0.10);
+  box-shadow: 0 1px 12px rgba(255,255,255,0.8);
   width: 65%;
-  height: auto;
+  margin: 5vh auto;
   color: white;
-  border: 2px solid red;
 }
 
-.glass-effect{
-  background: linear-gradient(#00064a14 0%, #0000001a 76%) no-repeat;
-  backdrop-filter: blur(0.4rem);
-  -webkit-backdrop-filter: blur(0.4rem);
-}
-
-.contenedorFoto{
-  border: 2px solid red;
-}
-
-.imagen{
-  border: 2px solid red;
-  width: 5%;
+.contenedorImagenPersonal{
+  height: 70vh;
+  margin: auto;
+  position: relative;
+  top: 10vh;
 }
 
 .contenedorInfo{
-  border: 2px solid red;
   font-family: "Jersey 25", sans-serif;
   padding: 3vh;
 }
 
 .contenedorInfoPersonal{
-  border: 2px solid red;
   width: 100%;
 }
 
 .contenedorIconos{
   width: 100%;
   margin-top: 3vh;
-  border: 2px solid red;
 }
 
 .img-svg{
-  width: 11vh;
+  width: 9vh;
   height: auto;
   margin-right: 1vh;
-  background-color: aliceblue;
   text-align: center;
 }
 
-.html{
-  fill: #ec3300; /* 🎨 el degradé */
-  
-  -webkit-mask-image: url('https://simpleicons.org/icons/html5.svg');
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-size: contain;
-  -webkit-mask-position: center;
+.imagenPersonal{
+  height: 50%;
+}
 
-  mask-image: url('https://simpleicons.org/icons/html5.svg');
-  mask-repeat: no-repeat;
-  mask-size: contain;
-  mask-position: center;
-};
+.html{
+  fill: #ec3300;
+}
 
 .css{
-  fill: #0374d1;
-
-  -webkit-mask-image: url('https://simpleicons.org/icons/html5.svg');
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-size: contain;
-  -webkit-mask-position: center;
-
-  mask-image: url('https://simpleicons.org/icons/html5.svg');
-  mask-repeat: no-repeat;
-  mask-size: contain;
-  mask-position: center;
-};
+  fill: rgb(29, 100, 252);
+}
 
 .javaScript{
-
-};
+ fill: #ebfb0ce1
+}
 
 .bootstrap{
-
-};
+  fill: #65019e;
+}
 
 .nodeJs{
+ fill: #01520b;
+}
 
-};
+.contenedorBotones{
+  margin-top: 3vh;
+}
+
+.boton{
+  background-color: #122231!important;
+  color: white !important;
+  border: none;
+  cursor: pointer;
+  font-family: "Jersey 25", sans-serif;
+  box-shadow: 0 1px 12px rgba(255, 255, 255, 0.508);
+}
 
 @media (max-width: 576px) {
+  .contenedorImagenPersonal{
+    height: auto;
+    width: auto;
+    position: relative;
+    top: 0;
+  }
+  .imagenPersonal{
+    margin-top: 2vh;
+  }
+  .contenedorCentralizador{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    box-sizing: border-box;
+  }
+  .contenedor1{
+    height: auto;
+    width: 75%;
+  }
+  .contenedorBotones{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .boton{
+    margin-left: 2vh;
+  }
   .img-svg {
-    width: 8vh;
-    margin: 1vh;
+    width: 6vh;
+    padding: 1.11vh;
     text-align: center;
   }
 }
