@@ -11,7 +11,7 @@
 }
 
 body{
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Pleiades_large.jpg/1200px-Pleiades_large.jpg");
+  background-image: url("C:\Users\Usuario\Desktop\Proyectos\Proyectos\Proyecto N°1 - Portafolio web\public\Images\FondoPagina.jpg");
   background-size: cover;   
   background-repeat: no-repeat;
   background-position: center;
@@ -31,7 +31,6 @@ body{
   width: 65%;
   margin: 18vh auto;
   color: white;
-  height: auto
 }
 
 .contenedorInfo{
@@ -71,19 +70,19 @@ img{
 }
 
 .html{
-  fill: #ec3300;
+  fill: #f23f0e;
 }
 
 .css{
-  fill: rgb(54, 116, 251);
+  fill: rgb(51, 115, 255);
 }
 
 .javaScript{
- fill: #cfdc1ee1
+ fill: #e5f225e1
 }
 
 .bootstrap{
-  fill: #7606b6;
+  fill: #8e0dd9;
 }
 
 .nodeJs{
@@ -105,9 +104,54 @@ img{
 }
 
 .contenedorProyectos{
+  height: auto;
+  border-radius: 8px;
+  backdrop-filter: blur(20px);
+  background-color: rgba(255, 255, 255, 0);
+  color: white;
+  padding: 10vh;
+}
+
+.card{
+  width: 23rem;
+  margin: 2vh;
+  box-shadow: 0 1px 12px rgba(255, 255, 255, 0.508);
+}
+
+.contenedorRedes{
   height: 100vh;
 }
 
+.contenidoRedes{
+  border-radius: 8px;
+  backdrop-filter: blur(20px);
+  background-color: rgba(255, 255, 255, 0.10);
+  box-shadow: 0 1px 12px rgba(255,255,255,0.8);
+  width: 65%;
+  margin: 18vh auto;
+  color: white;
+}
+
+.redes{
+  height: auto;
+  width: 100%;
+}
+
+.contact-details{
+  font-size: 4.4rem;
+  text-shadow: 2px 2px 3px #1f1f1f;
+  transition: transform 0.3s ease-out;
+  color: white;
+}
+
+.parrafoRedes{
+  font-family: italic;
+}
+
+a{
+  text-decoration: none;
+  color: white
+}
 
 @media (max-width: 1199.98px) {
   .contenedorImagenPersonal{
@@ -159,6 +203,22 @@ img{
   .contenedorProyectos{
     height: 100vh;
   }
+  .contenidoRedes{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 80%;
+  }
+  .redes{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 100%;
+  }
 }
   
 @media (max-width: 576px) {
@@ -195,5 +255,28 @@ img{
   img{
     height: 300px;
     width: 17.7vh;
+  }
+  .contenedorProyectos{
+    height: auto;
+    border-radius: 8px;
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0);
+    color: white;
+  }
+  .contenidoRedes{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 80%;
+  }
+  .redes{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 100%;
   }
 }
