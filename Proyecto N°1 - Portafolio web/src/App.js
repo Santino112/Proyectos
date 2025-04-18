@@ -18,7 +18,7 @@ function SeccionN1() {
           SANTINO SCAMPONE GARCIA
         </h2>
         <div className="contenedorInfoPersonal">
-          <p className="text-center text-sm-start fs-2 fs-md-2 fs-lg-1">
+          <p className="text-center text-sm-start fs-2 fs-md-3 fs-lg-1">
             Analísta de sistemas y desarrollador web. Apasionado por la
             programación y la obtención de nuevas habilidades. Tecnologías con
             las que me llevo bien:
@@ -72,10 +72,10 @@ function SeccionN1() {
           </div>
         </div>
         <div className="d-sm-flex flex-wrap justify-content-start gap-4 contenedorBotones">
-          <a href="\Images\Curriculum Vitae - Scampone Garcia Santino_250407_095137.pdf" target="_blank" rel="noopener noreferrer" className="btn boton fs-4 fs-md-2 fs-lg-1">
+          <a href="\Images\Curriculum Vitae - Scampone Garcia Santino_250407_095137.pdf" target="_blank" rel="noopener noreferrer" className="btn boton fs-4 fs-md-2 fs-xxl-3">
             Curriculum
           </a>
-          <a href="https://wa.me/5493534244165?text=Hola%2C%20estoy%20interesado%20en%20tu%20trabajo" target="_blank" rel="noopener noreferrer" className="btn boton fs-4 fs-md-2 fs-lg-1">
+          <a href="https://wa.me/5493534244165?text=Hola%2C%20estoy%20interesado%20en%20tu%20trabajo" target="_blank" rel="noopener noreferrer" className="btn boton fs-4 fs-md-2 fs-xxl-3">
             Contacto
           </a>
         </div>
@@ -91,7 +91,7 @@ function SeccionN2() {
         <img src="https://static.vecteezy.com/system/resources/thumbnails/000/696/278/small_2x/textured-black-background.jpg" className="card-img-top" alt="..."></img>
         <div className="card-body">
           <h5 className="text-sm-start fs-4 fs-md-2 fs-lg-1">Pagina de sodería</h5>
-          <p className="text-start fs-6 fs-md-2 fs-lg-1">Proyecto final de la materia practica profecionalizante de segundo año de mi carrera.</p>
+          <p className="text-start fs-6 fs-md-2 fs-lg-1">Proyecto de desarrollo web de la materia practica profecionalizante de segundo año de mi carrera.</p>
           <a href="#" className="btn boton fs-6 fs-md-2 fs-lg-1">Ver proyecto</a>
         </div>
       </div>
@@ -107,7 +107,7 @@ function SeccionN2() {
         <img src="https://static.vecteezy.com/system/resources/thumbnails/000/696/278/small_2x/textured-black-background.jpg" className="card-img-top" alt="..."></img>
         <div className="card-body">
           <h5 className="text-sm-start fs-4 fs-md-2 fs-lg-1">Semáforo</h5>
-          <p className="text-start fs-6 fs-md-2 fs-lg-1">Proyecto que consiste en un semáforo que cambia al interacturar con 2 botónes. Este es el trabajo final de primer año</p>
+          <p className="text-start fs-6 fs-md-2 fs-lg-1">Proyecto que consiste en un semáforo que cambia al interacturar con 2 botónes. Este es el trabajo final de primer año.</p>
           <a href="#" className="btn boton fs-6 fs-md-2 fs-lg-1">Ver proyecto</a>
         </div>
       </div>

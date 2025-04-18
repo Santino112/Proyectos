@@ -11,7 +11,7 @@
 }
 
 body{
-  background-image: url("C:\Users\Usuario\Desktop\Proyectos\Proyectos\Proyecto N°1 - Portafolio web\public\Images\FondoPagina.jpg");
+  background-image: url("C:\Users\Usuario\Desktop\Proyectos\Proyecto N°1 - Portafolio web\public\Images\FondoPagina.jpg");
   background-size: cover;   
   background-repeat: no-repeat;
   background-position: center;
@@ -153,73 +153,101 @@ a{
   color: white
 }
 
-@media (max-width: 1199.98px) {
-  .contenedorImagenPersonal{
-    margin: auto;
-  }
-  
-  .contenedorInfoPersonal{
-    width: 100%;
-    height: 35vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .contenedorInfoPersonal{
-    width: 100%;
-  }
-  
-  .contenedorIconos{
-    width: 100%;
-    margin-top: 3vh;
-  }
-  
-  .img-svg{
-    width: 9vh;
-    height: auto;
-    margin-right: 1vh;
-    text-align: center;
-  }
-  
-  .imagenPersonal{
-    height: 50%;
+@media (min-width: 993px) and (max-width: 1400px){
+  .contenedor1 {
+    border-radius: 8px;
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0.10);
+    box-shadow: 0 1px 12px rgba(255, 255, 255, 0.8);
+    width: 70%;
+    margin: 5vh auto;
+    padding: 1.5rem;
+    color: white;
   }
 
-  .contenedorBotones{
-    margin-top: 4vh;
+  .contenedorInfo{
+    font-family: "Jersey 25", sans-serif;
+    padding: 1vh;
   }
-  
-  .boton{
-    background-color: #122231!important;
+
+  .contenedorImagenPersonal {
+    margin: auto;
+    text-align: center;
+  }
+
+  .contenedorInfoPersonal {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .card {
+    width: 17rem;
+    margin: 1vh;
+    box-shadow: 0 1px 12px rgba(255, 255, 255, 0.5);
+  }
+
+  .contenedorIconos {
+    width: 100%;
+    margin-top: 2vh;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .img-svg {
+    width: 9vh;
+    height: auto;
+    text-align: center;
+  }
+
+  img {
+    height: auto;
+    width: 90%;
+    max-width: 300px;
+    margin: auto;
+  }
+
+  .boton {
+    padding: 0.5rem 1rem;
+    background-color: #122231 !important;
     color: white !important;
     border: none;
     cursor: pointer;
     font-family: "Jersey 25", sans-serif;
-    box-shadow: 0 1px 12px rgba(255, 255, 255, 0.508);
+    box-shadow: 0 1px 12px rgba(255, 255, 255, 0.5);
   }
-  
-  .contenedorProyectos{
-    height: 100vh;
+
+  .contenedorProyectos {
+    height: auto;
+    border-radius: 8px;
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0);
+    color: white;
+    padding: 3rem;
   }
-  .contenidoRedes{
+
+  .contenidoRedes,
+  .redes {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    height: auto;
-    width: 80%;
+    width: 70%;
+    padding: 1rem;
+    border: none; /* Quité el borde rojo */
   }
-  .redes{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: auto;
-    width: 100%;
+  .contact-details{
+    font-size: 2.4rem;
+    text-shadow: 2px 2px 3px #1f1f1f;
+    transition: transform 0.3s ease-out;
+    color: white;
   }
 }
+
   
 @media (max-width: 576px) {
   .contenedorInfoPersonal{
@@ -270,6 +298,7 @@ a{
     align-items: center;
     height: auto;
     width: 80%;
+
   }
   .redes{
     display: flex;
