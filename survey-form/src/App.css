@@ -1,0 +1,70 @@
+*,
+::before,
+::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+  background-image: linear-gradient(115deg, rgba(58, 58, 158, 0.8), rgba(136, 136, 206, 0.7)), url('../public/Images/FondoSurvey.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed; 
+}
+
+.contenedorTitulo {
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  padding: 2rem;
+}
+
+.contenedorFormulario {
+  border-radius: 8px;
+  backdrop-filter: blur(7px);
+  background-color: rgba(4, 2, 71, 0.337);
+  box-shadow: 0 1px 17px rgb(0, 0, 0);
+  font-family: 'Poppins', sans-serif;
+  margin: auto;
+  width: 40%;
+  color: white;
+  font-size: 1.3rem;
+  margin-bottom: 4rem;
+  padding: 1.9rem 0.625rem;
+  border-radius: 8px;
+}
+
+.btn {
+  width: 100%;
+}
+
+@media (max-width: 576px) {
+  .contenedorTitulo {
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    padding: 2.5rem;
+  }
+
+  .titulo {
+    font-size: 2.3vh;
+    text-align: center;
+  }
+
+  .subTitulo {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .contenedorFormulario {
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    font-size: 1rem;
+    margin-bottom: 5vh;
+    padding: 1rem;
+    border-radius: 8px;
+    width: auto;
+  }
+}
