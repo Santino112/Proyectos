@@ -1,6 +1,8 @@
 import "./App.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/600.css";
+import "@fontsource/roboto/700.css";
 import { Box, Typography, Avatar, Stack } from "@mui/material";
 
 function SeccionN1() {
@@ -14,20 +16,31 @@ function SeccionN1() {
       }}
     >
       <Stack
-      direction= {{
-        xs: "Column",
-        sm: "Row",
-        md: "row",
-        lg: "row"
-      }}
-      sx={{
-        width: "65%",
-        borderRadius: '8px',
-        backdropFilter: 'blur(20px)',
-        backgroundColor: 'rgba(255, 255, 255, 0.10)',
-        boxShadow: '0 1px 12px rgba(255,255,255,0.8)'
-      }}>
-        <Stack spacing={1} direction="column" sx={{
+        direction={{
+          xs: "Column",
+          sm: "Row",
+          md: "row",
+          lg: "row"
+        }}
+        sx={{
+          width: {
+            xs: "75%",
+            sm: "75%",
+            md: "80%",
+            lg: "80%"
+          },
+          margin: {
+            xs: "8vh auto",
+            sm: "8vh auto",
+            md: "15vh auto",
+            lg: "15vh auto"
+          },
+          border: '8px',
+          backdropFilter: 'blur(20px)',
+          backgroundColor: 'rgba(255, 255, 255, 0.10)',
+          boxShadow: '0 1px 12px rgba(255,255,255,0.8)'
+        }}>
+        <Stack spacing={1} direction="column" justifyContent="center" alignItems="center" sx={{
           padding: "2rem"
         }}>
           <Box
@@ -38,24 +51,44 @@ function SeccionN1() {
               maxWidth: "100%",
               height: "auto",
               width: {
-                xs: "80%",
-                sm: "90%",
+                xs: "65%",
+                sm: "65%",
                 md: "90%",
                 lg: "90%"
               }
             }}
           />
         </Stack>
-        <div className="d-sm-flex flex-column justify-content-end contenedorInfo">
-          <h2 className="text-center text-sm-start fs-1 fs-md-2 fs-lg-1">
+        <Stack spacing={4} direction="column" justifyContent="center" sx={{
+          padding: {
+            xs: "2rem",
+            sm: "2rem",
+            md: "1rem"
+          }
+        }}>
+          <Typography variant="h2" sx={{
+            fontSize: {
+              xs: "1.1rem",
+              sm: "1.1rem",
+              md: "3rem",
+              lg: "3rem"
+            }
+          }}>
             SANTINO SCAMPONE GARCIA
-          </h2>
+          </Typography>
           <div className="contenedorInfoPersonal">
-            <p className="text-center text-sm-start fs-2 fs-md-3 fs-lg-1">
+            <Typography variant="p" sx={{
+              fontSize: {
+                xs: "1.1rem",
+                sm: "1.1rem",
+                md: "2rem",
+                lg: "1rem"
+              }
+            }}>
               Analísta de sistemas y desarrollador web. Apasionado por la
               programación y la obtención de nuevas habilidades. Tecnologías con
               las que me llevo bien:
-            </p>
+            </Typography>
             <div className="d-sm-flex flex-wrap justify-content-start gap-4 contenedorIconos"></div>
           </div>
           <div className="d-sm-flex flex-wrap justify-content-start gap-4 contenedorBotones">
@@ -76,7 +109,7 @@ function SeccionN1() {
               Contacto
             </a>
           </div>
-        </div>
+        </Stack>
       </Stack>
     </Box>
   );
