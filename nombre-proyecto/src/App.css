@@ -1,0 +1,12 @@
+body{
+  background-image: url('../public/Images/FondoPagina.jpg');
+  background-size: cover;   
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
