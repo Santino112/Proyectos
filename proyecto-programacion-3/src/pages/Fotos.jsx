@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Productos() {
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const [imgurl, setimgurl] = useState();
   const consulta = async () => {
     const response = await axios.get("https://dog.ceo/api/breeds/image/random");
@@ -11,9 +11,11 @@ const navigate = useNavigate();
     setimgurl(response.data.message);
   };
   return (
-    <div className="container mt-5 text-center">
+    <div className="contenedorFotos">
       <h2>Foto aleatoria de un perro 🐶</h2>
-      <img src={imgurl}></img>
+      <div className="imagen">
+        <img src={imgurl}></img>
+      </div>
       <button onClick={consulta}>Consultar</button>
       <button onClick={() => navigate("/")}>Volver al inicio</button>
     </div>

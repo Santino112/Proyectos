@@ -7,7 +7,6 @@ import Usuario from "./pages/Usuario";
 function App() {
   return (
     <Router>
-      Proyecto get y post
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Fotos" element={<Fotos/>} />
