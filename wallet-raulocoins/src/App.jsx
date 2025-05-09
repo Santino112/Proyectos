@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Register from "./pages/Register.jsx";
 import Totp from "./pages/Totp.jsx";
 import Account from "./pages/Account.jsx";
+import Login from "./pages/Login.jsx";
 import VerifyAccount from "./pages/VerifyAccount.jsx";
-import SignInSide from "./sign-in-side/SignInSide.jsx"
-import { ThemeProvider, createTheme} from '@mui/material/styles';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
+import Transferencia from "./pages/transfer.jsx";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { Box } from '@mui/material';
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
 
 const theme = createTheme();
 
@@ -18,13 +18,21 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Routes>
-          <Route path="/" element={<SignInSide />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/totp" element={<Totp />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/verify-account" element={<VerifyAccount />} />
-        </Routes>
+        <Box sx={{
+          width: "100vw",
+          minHeight: "100vh",
+          mx: "center",
+          backgroundColor: "#F0A8E5"
+        }}>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/totp" element={<Totp />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="/verify-account" element={<VerifyAccount />} />
+            <Route path="/transfer" element={<Transferencia />} />
+          </Routes>
+        </Box>
       </Router>
     </ThemeProvider>
   );

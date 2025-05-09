@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { Stack, Box, Button, Input } from '@mui/material';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -51,7 +52,7 @@ const Login = () => {
   };  
   
   return (
-    <div className="login-container">
+    <Stack className="login-container">
       <img
         src={"/assets/raulCoin.png"}
         alt={"raulCoin"}
@@ -92,7 +93,7 @@ const Login = () => {
           <Link className='auth-link' to="/register">Crear nueva cuenta</Link>
         </p>
       </form>
-    </div>
+    </Stack>
   );
 };
 
