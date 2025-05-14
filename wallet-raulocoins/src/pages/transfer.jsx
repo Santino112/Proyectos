@@ -1,17 +1,64 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Stack, Box, Button, TextField, Typography } from "@mui/material";
 
 const Transferencia = (e) => {
+    const [alias, setAlias] = useState("");
+    const [cantidad, setCantidad] = useState("");
+    const [detalle, setDetalle] = useState("");
+    const [codigo, setCodigo] = useState("");
     const navigate = useNavigate();
 
-    const { name, username, balance, token } = JSON.parse(
+    const { name, username } = JSON.parse(
         localStorage.getItem("datosLogin")
     );
 
     const Account = () => {
         navigate("/Account");
+    };
+
+    const transferencia = async (e) => {
+        e.preventDefault();
+
+        const datosTransferencia = {
+            fromUsername: username,
+            toUsername: alias,
+            amount: cantidad,
+            description: detalle,
+            operationToken: codigo
+        }
+
+        try {
+            const response = await axios.post("https://raulocoin.onrender.com/api/transfer", datosTransferencia);
+            const res = response.data;
+
+            console.log("Respuesta completa:", response);
+            console.log("Datos recibidos:", res);
+            if (res.success) {
+                alert(res.success);
+                const datosActuales = JSON.parse(
+                    localStorage.getItem("datosLogin")
+                );
+
+                const nuevoBalance = res.transfer.from.newBalance;
+
+                const nuevosDatos = {
+                    ...datosActuales,
+                    balance: nuevoBalance,
+                    token: JSON.parse(localStorage.getItem("datosLogin")).token
+                };
+
+                localStorage.setItem("datosLogin", JSON.stringify(nuevosDatos));
+                navigate('/Account');
+            }
+        } catch (error) {
+            if (error.response && error.response.data && error.response.data.message) {
+                console.log("Error en la transferencia:", error.response.data.message);
+            } else {
+                console.log("Error desconocido al hacer la transferencia:", error);
+            }
+        }
     };
 
     return (
@@ -47,31 +94,30 @@ const Transferencia = (e) => {
                         User: {name}
                     </Typography>
                 </Box>
-                <form sx={{ width: "120%" }}>
-                    <Stack spacing={4} direction="column" sx={{ border: "2px solid red", width: "100%" }}>
-                        <TextField label="Alias" variant="standard" />
-                        <TextField label="Cantidad" variant="standard" />
-                        <TextField label="Detalle" variant="standard" />
-                        <TextField label="TOTP" variant="standard" />
-                        <Stack spacing={2} direction={{xs: "column", md:"row"}}>
-                            <Button
-                                variant="contained"
-                                color="success"
-                                onClick={Account}
-                                sx={{ fontSize: "1rem", width: "50%" }}
-                            >
-                                Volver
-                            </Button>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                sx={{ fontSize: "1rem", width: "auto" }}
-                            >
-                                Transferir
-                            </Button>
-                        </Stack>
+                <Box component="form" onSubmit={transferencia} sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", height: "100%", border: "2px solid red" }}>
+                    <TextField label="Alias" type="text" variant="standard" value={alias} onChange={(e) => setAlias(e.target.value)} required />
+                    <TextField label="Cantidad" type="number" variant="standard" value={cantidad} onChange={(e) => setCantidad(e.target.value)} required />
+                    <TextField label="Detalle" type="text" variant="standard" value={detalle} onChange={(e) => setDetalle(e.target.value)} required />
+                    <TextField label="TOTP" type="text" variant="standard" value={codigo} onChange={(e) => setCodigo(e.target.value)} required />
+                    <Stack spacing={2} direction={{ xs: "column", md: "row" }}>
+                        <Button
+                            variant="contained"
+                            color="success"
+                            onClick={Account}
+                            sx={{ fontSize: "1rem", width: "50%" }}
+                        >
+                            Volver
+                        </Button>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                            sx={{ fontSize: "1rem", width: "auto" }}
+                        >
+                            Transferir
+                        </Button>
                     </Stack>
-                </form>
+                </Box>
             </Stack >
         </Box >
     );

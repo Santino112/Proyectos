@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { Stack, Box, Button, Input } from '@mui/material';
+import { Stack, Box, Button, TextField } from '@mui/material';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -61,29 +61,26 @@ const Login = () => {
       <h1 className='auth-title'>Iniciar sesión</h1>
       <p className='auth-subtitle'>¡Bienvenido de nuevo, te hemos echado de menos!</p>
       <form onSubmit={handleSubmit}>
-        <Input
-          type="text"
-          placeholder="Correo electrónico"
+        <TextField
+          label="Email"
+          variant="standard"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className='auth-input'
         />
-        <Input
-          type="text"
-          placeholder="Alias"
+        <TextField
+          label="Alias"
+          variant="standard"
           value={alias}
           onChange={(e) => setAlias(e.target.value)}
           required
-          className='auth-input'
         />
-        <Input
-          type="text"
-          placeholder="Código"
+        <TextField
+          label="Codigo TOTP"
+          variant="standard"
           value={codigo}
           onChange={(e) => setCodigo(e.target.value)}
           required
-          className='auth-input'
         />
         <Button type="primary" htmlType="submit" className='auth-button' disabled={loading}>
           {loading ? 'Cargando...' : 'Ingresar'}
