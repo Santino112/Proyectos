@@ -13,7 +13,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-  
+
     const data = {
       username: alias,
       totpToken: codigo,
@@ -24,13 +24,13 @@ const Login = () => {
       const res = response.data;
   
       if (res.success && res.user) {
-        navigate('/account', {
-          state: {
-            name: res.user.name,
-            username: res.user.username,
-            balance: res.user.balance,
-          },
-        });
+        localStorage.setItem("datosLogin", JSON.stringify({
+          name: res.user.name,
+          username: res.user.username,
+          balance: res.user.balance,
+          token: data.totpToken
+        }));
+        navigate('/account');
       } else {
         alert('Credenciales incorrectas');
       }

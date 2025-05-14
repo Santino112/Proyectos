@@ -19,10 +19,8 @@ function App() {
       <CssBaseline />
       <Router>
         <Box sx={{
-          width: "100vw",
-          minHeight: "100vh",
-          mx: "center",
-          backgroundColor: "#F0A8E5"
+          backgroundColor: "#b2dfdb",
+          color: "#ffff"
         }}>
           <Routes>
             <Route path="/" element={<Login />} />

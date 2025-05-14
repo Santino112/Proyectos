@@ -6,7 +6,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 const Account = () => {
   const location = useLocation();
-  const { name, username, balance } = location.state || {};
+  const { name, username, balance, token} = JSON.parse(localStorage.getItem("datosLogin"))
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -26,7 +26,7 @@ const Account = () => {
         <div className='user-container'>
             <p className='saludo'>Saldo actual</p>
             <h1 className='saldo'>
-                R$ {balance.toLocaleString()}
+                R$ {balance}
             </h1>
             <p className='saludo'>{username}</p>
         </div>
