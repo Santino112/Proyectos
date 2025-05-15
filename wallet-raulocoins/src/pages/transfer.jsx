@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
-import { Stack, Box, Button, TextField, Typography } from "@mui/material";
+import { Stack, Box, Button, TextField, Typography, Autocomplete } from "@mui/material";
 
 const Transferencia = (e) => {
     const [alias, setAlias] = useState("");
@@ -9,6 +9,7 @@ const Transferencia = (e) => {
     const [detalle, setDetalle] = useState("");
     const [codigo, setCodigo] = useState("");
     const navigate = useNavigate();
+    const AliasUsuarios = ["alejo.daloia", "barbimol", "SamirFrascarelli.alias", "tobias.rc.alias", "Fransay.alias", "misaSSJ", "FabriRuma912", "anto.p", "Agus", "guada", "jogani", "virpedraza47", "Loki", "lupigliacampi", "maxibergese", "facundogrosso", "sqlenjoyer.alias", "santiagolazos", "otakuemo", "jgp.raulo", "dam", "JulietaGonella.alias"];
 
     const { name, username } = JSON.parse(
         localStorage.getItem("datosLogin")
@@ -67,7 +68,7 @@ const Transferencia = (e) => {
             sx={{ border: "2px solid red", height: "100vh", width: "100vw" }}
         >
             <Stack
-                spacing={3}
+                spacing={2}
                 direction="column"
                 alignItems="center"
                 sx={{
@@ -86,7 +87,7 @@ const Transferencia = (e) => {
                         lg: "80%",
                         xl: "70%"
                     },
-                    border: "2px solid red",
+
                 }}
             >
                 <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#26a69a", width: "100%", height: "12%", textAlign: "center" }}>
@@ -94,11 +95,25 @@ const Transferencia = (e) => {
                         User: {name}
                     </Typography>
                 </Box>
-                <Box component="form" onSubmit={transferencia} sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", height: "100%", border: "2px solid red" }}>
-                    <TextField label="Alias" type="text" variant="standard" value={alias} onChange={(e) => setAlias(e.target.value)} required />
-                    <TextField label="Cantidad" type="number" variant="standard" value={cantidad} onChange={(e) => setCantidad(e.target.value)} required />
-                    <TextField label="Detalle" type="text" variant="standard" value={detalle} onChange={(e) => setDetalle(e.target.value)} required />
-                    <TextField label="TOTP" type="text" variant="standard" value={codigo} onChange={(e) => setCodigo(e.target.value)} required />
+                <Box component="form" onSubmit={transferencia} sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", height: "100%", border: "2px solid red", gap: 4 }}>
+                    <Autocomplete
+                        value={alias}
+                        onChange={(event, newValue) => setAlias(newValue)}
+                        options={[...AliasUsuarios]} // ejemplo de opciones
+                        sx={{ width: "45vh" }}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label="Alias"
+                                variant="standard"
+                                required
+                                InputLabelProps={{ required: false }} // esto oculta el asterisco
+                            />
+                        )}
+                    />
+                    <TextField label="Cantidad" type="number" variant="standard" value={cantidad} onChange={(e) => setCantidad(e.target.value)} InputLabelProps={{ required: false }} required sx={{ width: "45vh" }} />
+                    <TextField label="Detalle" type="text" variant="standard" value={detalle} onChange={(e) => setDetalle(e.target.value)} InputLabelProps={{ required: false }} required sx={{ width: "45vh" }} />
+                    <TextField label="TOTP" type="text" variant="standard" value={codigo} onChange={(e) => setCodigo(e.target.value)} InputLabelProps={{ required: false }} required sx={{ width: "45vh" }} />
                     <Stack spacing={2} direction={{ xs: "column", md: "row" }}>
                         <Button
                             variant="contained"

@@ -18,10 +18,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Box sx={{
-          backgroundColor: "#b2dfdb",
-          color: "#ffff"
-        }}>
+       
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -30,7 +27,6 @@ function App() {
             <Route path="/verify-account" element={<VerifyAccount />} />
             <Route path="/transfer" element={<Transferencia />} />
           </Routes>
-        </Box>
       </Router>
     </ThemeProvider>
   );
