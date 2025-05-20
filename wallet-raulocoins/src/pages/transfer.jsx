@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
-import { Stack, Box, Button, TextField, Typography, Autocomplete } from "@mui/material";
+import { Stack, Box, Button, TextField, Typography, Autocomplete, Alert } from "@mui/material";
 
 const Transferencia = (e) => {
     const [alias, setAlias] = useState("");
     const [cantidad, setCantidad] = useState("");
     const [detalle, setDetalle] = useState("");
     const [codigo, setCodigo] = useState("");
+    const [severity, setSeverity] = useState("");
+    const [mensaje, setMensaje] = useState("");
     const navigate = useNavigate();
     const AliasUsuarios = ["alejo.daloia", "barbimol", "SamirFrascarelli.alias", "tobias.rc.alias", "Fransay.alias", "misaSSJ", "FabriRuma912", "anto.p", "Agus", "guada", "jogani", "virpedraza47", "Loki", "lupigliacampi", "maxibergese", "facundogrosso", "sqlenjoyer.alias", "santiagolazos", "otakuemo", "jgp.raulo", "dam", "JulietaGonella.alias"];
 
@@ -22,42 +24,79 @@ const Transferencia = (e) => {
     const transferencia = async (e) => {
         e.preventDefault();
 
-        const datosTransferencia = {
-            fromUsername: username,
-            toUsername: alias,
-            amount: cantidad,
-            description: detalle,
-            operationToken: codigo
+        const datosVerify = {
+            username,
+            totpToken: codigo
         }
 
+        const response = await axios.post("https://raulocoin.onrender.com/api/verify-totp", datosVerify);
+        const res = response.data;
+
         try {
-            const response = await axios.post("https://raulocoin.onrender.com/api/transfer", datosTransferencia);
-            const res = response.data;
-
-            console.log("Respuesta completa:", response);
-            console.log("Datos recibidos:", res);
             if (res.success) {
-                alert(res.success);
-                const datosActuales = JSON.parse(
-                    localStorage.getItem("datosLogin")
-                );
+                const datosTransferencia = {
+                    fromUsername: username,
+                    toUsername: alias,
+                    amount: cantidad,
+                    description: detalle,
+                    operationToken: datosVerify.totpToken
+                }
 
-                const nuevoBalance = res.transfer.from.newBalance;
+                try {
+                    const response = await axios.post("https://raulocoin.onrender.com/api/transfer", datosTransferencia);
+                    const res = response.data;
 
-                const nuevosDatos = {
-                    ...datosActuales,
-                    balance: nuevoBalance,
-                    token: JSON.parse(localStorage.getItem("datosLogin")).token
-                };
+                    console.log("Respuesta completa:", response.sex);
+                    console.log("Datos recibidos:", res);
+                    if (res.success) {
+                        setMensaje(res.message);
+                        setSeverity("success");
+                        setTimeout(() => {
+                            setMensaje('');
+                        }, 5000);
+                        const datosActuales = JSON.parse(
+                            localStorage.getItem("datosLogin")
+                        );
 
-                localStorage.setItem("datosLogin", JSON.stringify(nuevosDatos));
-                navigate('/Account');
+                        const nuevoBalance = res.transfer.from.newBalance;
+
+                        const nuevosDatos = {
+                            ...datosActuales,
+                            balance: nuevoBalance,
+                            token: JSON.parse(localStorage.getItem("datosLogin")).token
+                        };
+
+                        localStorage.setItem("datosLogin", JSON.stringify(nuevosDatos));
+                    }
+                } catch (error) {
+                    if (error.response && error.response.data && error.response.data.message) {
+                        setMensaje(res.message);
+                        setSeverity("error");
+                        setTimeout(() => {
+                            setMensaje('');
+                        }, 5000);
+                    } else {
+                        setMensaje("Error desconocido al hacer la transferencia:", error);
+                        setSeverity("error");
+                        setTimeout(() => {
+                            setMensaje('');
+                        }, 5000);
+                    }
+                }
             }
         } catch (error) {
             if (error.response && error.response.data && error.response.data.message) {
-                console.log("Error en la transferencia:", error.response.data.message);
+                setMensaje("Error desconocido al hacer la transferencia:", error);
+                setSeverity("error");
+                setTimeout(() => {
+                    setMensaje('');
+                }, 5000);
             } else {
-                console.log("Error desconocido al hacer la transferencia:", error);
+                setMensaje("Error desconocido al hacer la transferencia:", error);
+                setSeverity("error");
+                setTimeout(() => {
+                    setMensaje('');
+                }, 5000);
             }
         }
     };
@@ -65,76 +104,219 @@ const Transferencia = (e) => {
     return (
         <Box
             component="section"
-            sx={{ border: "2px solid red", height: "100vh", width: "100vw" }}
+            sx={{
+                minHeight: "100vh",
+                minWidth: "100vw",
+                backgroundImage: 'url(../public/Images/Transferencia.png)',
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                overflow: "hidden",
+                px: { xs: 2, sm: 4 }
+            }}
         >
             <Stack
-                spacing={2}
-                direction="column"
-                alignItems="center"
+                spacing={3}
                 sx={{
-                    margin: "auto",
                     width: {
                         xs: "100%",
                         sm: "100%",
                         md: "60%",
                         lg: "40%",
-                        xl: "40%"
+                        xl: "45%",
                     },
                     height: {
                         xs: "100%",
                         sm: "100%",
-                        md: "80%",
-                        lg: "80%",
-                        xl: "70%"
+                        md: "auto",
+                        lg: "auto",
+                        xl: "auto",
                     },
-
+                    backdropFilter: "blur(5px)",
+                    backgroundColor: "rgba(255, 255, 255, 0.10)",
+                    boxShadow: "0 1px 12px rgba(25, 25, 25, 0.8)",
+                    borderRadius: 2,
+                    py: 5,
+                    px: { xs: 2, sm: 4 }
                 }}
             >
-                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#26a69a", width: "100%", height: "12%", textAlign: "center" }}>
-                    <Typography variant="h2" sx={{ fontSize: "2rem" }}>
-                        User: {name}
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        boxShadow: "0 1px 12px rgba(0, 0, 0, 0.39)",
+                        width: "100%",
+                        height: "12%",
+                        textAlign: "center"
+                    }}
+                >
+                    <Typography variant="h2" sx={{
+                        fontSize: {
+                            xs: "1.2rem",
+                            sm: "1.2rem",
+                            md: "1.5rem",
+                            lg: "1.5rem",
+                            xl: "1.8rem"
+                        }
+                    }}>
+                        ¿Listo para transferir {name}?
                     </Typography>
                 </Box>
-                <Box component="form" onSubmit={transferencia} sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", height: "100%", border: "2px solid red", gap: 4 }}>
-                    <Autocomplete
-                        value={alias}
-                        onChange={(event, newValue) => setAlias(newValue)}
-                        options={[...AliasUsuarios]} // ejemplo de opciones
-                        sx={{ width: "45vh" }}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                label="Alias"
-                                variant="standard"
-                                required
-                                InputLabelProps={{ required: false }} // esto oculta el asterisco
-                            />
-                        )}
-                    />
-                    <TextField label="Cantidad" type="number" variant="standard" value={cantidad} onChange={(e) => setCantidad(e.target.value)} InputLabelProps={{ required: false }} required sx={{ width: "45vh" }} />
-                    <TextField label="Detalle" type="text" variant="standard" value={detalle} onChange={(e) => setDetalle(e.target.value)} InputLabelProps={{ required: false }} required sx={{ width: "45vh" }} />
-                    <TextField label="TOTP" type="text" variant="standard" value={codigo} onChange={(e) => setCodigo(e.target.value)} InputLabelProps={{ required: false }} required sx={{ width: "45vh" }} />
-                    <Stack spacing={2} direction={{ xs: "column", md: "row" }}>
-                        <Button
-                            variant="contained"
-                            color="success"
-                            onClick={Account}
-                            sx={{ fontSize: "1rem", width: "50%" }}
+
+                <Box
+                    component="form"
+                    onSubmit={transferencia}
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        width: "100%",
+                        height: "100%",
+                        gap: 5
+                    }}
+                >
+                    <Box sx={{ width: { xs: "90%", sm: "70%", md: "50%" } }}>
+                        <Autocomplete
+                            value={alias}
+                            onChange={(event, newValue) => setAlias(newValue)}
+                            options={[...AliasUsuarios]}
+                            sx={{
+                                mb: 3,
+                                input: { color: "white" },
+                                label: { color: "white" },
+                                "& label.Mui-focused": { color: "white" },
+                                "& .MuiOutlinedInput-root": {
+                                    "& fieldset": { borderColor: "white" },
+                                    "&:hover fieldset": { borderColor: "white" },
+                                    "&.Mui-focused fieldset": { borderColor: "white" }
+                                },
+                            }}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Alias"
+                                    variant="standard"
+                                    required
+                                    InputLabelProps={{ required: false }}
+                                    fullWidth
+                                />
+                            )}
+                        />
+
+                        <TextField
+                            label="Cantidad"
+                            type="number"
+                            variant="standard"
+                            value={cantidad}
+                            onChange={(e) => setCantidad(e.target.value)}
+                            InputLabelProps={{ required: false }}
+                            required
+                            fullWidth
+                            sx={{
+                                mb: 3,
+                                input: { color: "white" },
+                                label: { color: "white" },
+                                "& label.Mui-focused": { color: "white" },
+                                "& .MuiOutlinedInput-root": {
+                                    "& fieldset": { borderColor: "white" },
+                                    "&:hover fieldset": { borderColor: "white" },
+                                    "&.Mui-focused fieldset": { borderColor: "white" }
+                                },
+                            }}
+                        />
+
+                        <TextField
+                            label="Detalle"
+                            type="text"
+                            variant="standard"
+                            value={detalle}
+                            onChange={(e) => setDetalle(e.target.value)}
+                            InputLabelProps={{ required: false }}
+                            required
+                            fullWidth
+                            sx={{
+                                mb: 3,
+                                input: { color: "white" },
+                                label: { color: "white" },
+                                "& label.Mui-focused": { color: "white" },
+                                "& .MuiOutlinedInput-root": {
+                                    "& fieldset": { borderColor: "white" },
+                                    "&:hover fieldset": { borderColor: "white" },
+                                    "&.Mui-focused fieldset": { borderColor: "white" }
+                                },
+                            }}
+                        />
+
+                        <TextField
+                            label="TOTP"
+                            type="text"
+                            variant="standard"
+                            value={codigo}
+                            onChange={(e) => setCodigo(e.target.value)}
+                            InputLabelProps={{ required: false }}
+                            required
+                            fullWidth
+                            sx={{
+                                mb: 3,
+                                input: { color: "white" },
+                                label: { color: "white" },
+                                "& label.Mui-focused": { color: "white" },
+                                "& .MuiOutlinedInput-root": {
+                                    "& fieldset": { borderColor: "white" },
+                                    "&:hover fieldset": { borderColor: "white" }
+                                },
+                            }}
+                        />
+
+                        <Stack
+                            spacing={2}
+                            direction={{ xs: "column", sm: "column", md: "row" }}
+                            sx={{ mt: 2 }}
                         >
-                            Volver
-                        </Button>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            type="submit"
-                            sx={{ fontSize: "1rem", width: "auto" }}
-                        >
-                            Transferir
-                        </Button>
-                    </Stack>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                type="submit"
+                                sx={{
+                                    fontSize: "1rem",
+                                    width: "100%",
+                                    backgroundColor: "#74c69d",
+                                    "&:hover": {
+                                        backgroundColor: "#52b788"
+                                    }
+                                }}
+                            >
+                                Transferir
+                            </Button>
+                            <Button
+                                variant="contained"
+                                color="success"
+                                onClick={Account}
+                                sx={{
+                                    fontSize: "1rem",
+                                    width: "100%",
+                                    backgroundColor: "#d8f3dc",
+                                    "&:hover": {
+                                        backgroundColor: "#b7e4c7"
+                                    }
+                                }}
+                            >
+                                Volver
+                            </Button>
+                        </Stack>
+                    </Box>
                 </Box>
-            </Stack >
-        </Box >
+                {mensaje && (
+                    <Alert variant="filled" severity={severity}>
+                        {mensaje}
+                    </Alert>
+                )}
+            </Stack>
+        </Box>
     );
 };
 

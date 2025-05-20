@@ -11,24 +11,27 @@ import { Box } from '@mui/material';
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 
-const theme = createTheme();
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <Router>
-       
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/totp" element={<Totp />} />
-            <Route path="/account" element={<Account />} />
-            <Route path="/verify-account" element={<VerifyAccount />} />
-            <Route path="/transfer" element={<Transferencia />} />
-          </Routes>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/totp" element={<Totp />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/verify-account" element={<VerifyAccount />} />
+          <Route path="/transfer" element={<Transferencia />} />
+        </Routes>
       </Router>
-    </ThemeProvider>
+    </ThemeProvider >
   );
 }
 
