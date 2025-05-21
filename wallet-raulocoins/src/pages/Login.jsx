@@ -182,7 +182,7 @@ const Login = () => {
             }}
           />
           <TextField
-            label="Codigo TOTP"
+            label="Código"
             variant="outlined"
             value={codigo}
             onChange={(e) => setCodigo(e.target.value)}
@@ -236,7 +236,7 @@ const Login = () => {
                   xs: "100%",
                   sm: "100%",
                   md: "30%",
-                  lg: "25%",
+                  lg: "22%",
                   xl: "25%",
                 },
                 backgroundColor: "#74c69d",
@@ -260,15 +260,39 @@ const Login = () => {
                   xs: "100%",
                   sm: "100%",
                   md: "30%",
-                  lg: "25%",
+                  lg: "15%",
                   xl: "25%",
                 },
                 backgroundColor: "#d8f3dc",
                 "&:hover": {
-                  backgroundColor: "#b7e4c7"
+                  backgroundColor: "#b7e4c7",
+                  color: "#000"
                 }
               }}
-            >Crear una nueva cuenta
+            >Nueva cuenta
+            </Button>
+            <Button
+              variant="contained"
+              component="a"
+              href="/totp"
+              color="primary"
+              sx={{
+                fontSize: "1rem",
+                height: 50,
+                width: {
+                  xs: "100%",
+                  sm: "100%",
+                  md: "30%",
+                  lg: "15%",
+                  xl: "25%",
+                },
+                backgroundColor: "#d8f3dc",
+                "&:hover": {
+                  backgroundColor: "#b7e4c7",
+                  color: "#000"
+                }
+              }}
+            >Recuperar código
             </Button>
           </Box>
         </Box>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Stack, Box, Button, TextField, Typography } from '@mui/material';
 
 const Totp = () => {
   const location = useLocation();
@@ -13,30 +14,110 @@ const Totp = () => {
   }
 
   return (
-    <div className="login-container">
-        <img
-            src={"/assets/raulCoin.png"}
-            alt={"raulCoin"}
-            className='logo-img'
-        />
-        <h1 className='auth-title'>Autenticación</h1>
-        <p className='auth-subtitle'>Escanea este código QR con tu aplicación de autenticación</p>
+    <Box
+      component="section"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "100vh",
+        height: "100vh",
+        minWidth: "100vw",
+        backgroundImage: 'url(../public/Images/Inicio.png)',
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        overflow: "hidden"
+      }}
+    >
+      <Stack
+        spacing={3}
+        alignItems="center"
+        sx={{
+          width: {
+            xs: "100%",
+            sm: "100%",
+            md: "auto",
+            lg: "auto",
+            xl: "auto",
+          },
+        }}>
+        <Typography
+          variant="h1"
+          sx={{
+            fontSize: {
+              xs: "2.5rem",
+              sm: "2rem",
+              md: "2rem",
+              lg: "2rem",
+              xl: "2.8rem",
+            },
+            textAlign: "center",
+          }}
+        >Autenticacion</Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            fontSize: {
+              xs: "1rem",
+              sm: "1rem",
+              md: "1.2rem",
+              lg: "1.5rem",
+              xl: "1.5rem",
+            },
+            textAlign: "center",
+          }}
+        >
+          Escanea este código QR con tu aplicación de autenticación
+        </Typography>
 
         <img className='qr-img' src={totpSetup.qrCodeUrl} alt="TOTP QR Code" style={{ maxWidth: 300 }} />
 
-        <p
-            className="auth-code"
-            onClick={() => navigator.clipboard.writeText(totpSetup.manualSetupCode)}
-            title="Haz clic para copiar"
+        <Typography
+          variant='body1'
+          sx={{
+            fontSize: {
+              xs: "1rem",
+              sm: "1rem",
+              md: "1.2rem",
+              lg: "1.5rem",
+              xl: "1.5rem",
+            },
+            textAlign: "center",
+          }}
+          className="auth-code"
+          onClick={() => navigator.clipboard.writeText(totpSetup.manualSetupCode)}
+          title="Haz clic para copiar"
         >
-            {totpSetup.manualSetupCode}
-        </p>
-
-
-        <Button type="primary" className='auth-button' onClick={() => navigate('/')}>
-            Ingresar
+          {totpSetup.manualSetupCode}
+        </Typography>
+        <Button
+          type="primary"
+          variant="contained"
+          component="a"
+          href="/register"
+          color="primary"
+          sx={{
+            fontSize: "1rem",
+            height: 50,
+            width: {
+              xs: "60%",
+              sm: "600%",
+              md: "30%",
+              lg: "15%",
+              xl: "25%",
+            },
+            backgroundColor: "#d8f3dc",
+            "&:hover": {
+              backgroundColor: "#b7e4c7",
+              color: "#000"
+            }
+          }} onClick={() => navigate('/')}>
+          Ingresar
         </Button>
-    </div>
+      </Stack>
+    </Box>
   );
 };
 

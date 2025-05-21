@@ -2,23 +2,23 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { Stack, Box, Button, Input } from '@mui/material';
+import { Stack, Box, Button,Typography, TextField } from '@mui/material';
 
 const Register = () => {
   const [email, setEmail] = useState('');
   const [alias, setAlias] = useState('');
   const [nombre, setNombre] = useState('');
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
 
     const data = {
-        name: nombre,
-        username: alias,  
-        email: email, 
+      name: nombre,
+      username: alias,
+      email: email,
     };
 
     axios.post('https://raulocoin.onrender.com/api/register', data)
@@ -35,52 +35,235 @@ const Register = () => {
       .finally(() => {
         setLoading(false);
       });
-    };
+  };
 
-    return (
-        <div className="login-container">
-            <img
-                src={"/assets/raulCoin.png"}
-                alt={"raulCoin"}
-                className='logo-img'
+  return (
+    <>
+      <Box
+        component="section"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+          minWidth: "100vw",
+          backgroundImage: 'url(../public/Images/Registro.png)',
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+        }}
+      >
+        <Stack
+          spacing={3}
+          alignItems="center"
+          sx={{
+            width: {
+              xs: "100%",
+              sm: "100%",
+              md: "auto",
+              lg: "auto",
+              xl: "auto",
+            },
+          }}
+        >
+          <Box>
+            <Typography
+              variant="h1"
+              sx={{
+                fontSize: {
+                  xs: "2.5rem",
+                  sm: "2rem",
+                  md: "2rem",
+                  lg: "2rem",
+                  xl: "2.8rem",
+                },
+                textAlign: "center",
+              }}
+            >
+              Registrate
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                fontSize: {
+                  xs: "1rem",
+                  sm: "1rem",
+                  md: "1.2rem",
+                  lg: "1.5rem",
+                  xl: "1.5rem",
+                },
+                textAlign: "center",
+              }}
+            >
+              ¡Empecemos esta aventura juntos!
+            </Typography>
+          </Box>
+
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{
+              display: "flex",
+              flexDirection: {
+                xs: "column",
+                sm: "column",
+                md: "row",
+                lg: "row",
+                xl: "row",
+              },
+              alignItems: "center",
+              justifyContent: "center",
+              flexWrap: "wrap",
+              gap: 2,
+            }}
+          >
+            <TextField
+              label="Nombre"
+              variant="outlined"
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
+              required
+              InputLabelProps={{ required: false }}
+              sx={{
+                input: { color: "white" },
+                label: { color: "white" },
+                "& label.Mui-focused": { color: "white" },
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "white",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "white",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "white",
+                  },
+                },
+                width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 255 }
+              }}
             />
-            <h1 className='auth-title'>Regístrate</h1>
-            <p className='auth-subtitle'>¡Empecemos esta aventura juntos!</p>
-            <form onSubmit={handleSubmit}>
-                <Input
-                type="text"
-                placeholder="Nombre"
-                value={nombre}
-                onChange={(e) => setNombre(e.target.value)}
-                required
-                className='auth-input'
-                />
-                <Input
-                type="text"
-                placeholder="Correo electrónico"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className='auth-input'
-                />
-                <Input
-                type="text"
-                placeholder="Alias"
-                value={alias}
-                onChange={(e) => setAlias(e.target.value)}
-                required
-                className='auth-input'
-                />
-                <Button type="primary" htmlType="submit" className='auth-button' disabled={loading}>
-                {loading ? 'Cargando...' : 'Registrarme'}
-                </Button>
+            <TextField
+              label="Correo electrónico"
+              variant="outlined"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              InputLabelProps={{ required: false }}
+              sx={{
+                input: { color: "white" },
+                label: { color: "white" },
+                "& label.Mui-focused": { color: "white" },
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "white",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "white",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "white",
+                  },
+                },
+                width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 255 }
+              }}
+            />
+            <TextField
+              label="Alias"
+              variant="outlined"
+              value={alias}
+              onChange={(e) => setAlias(e.target.value)}
+              required
+              InputLabelProps={{ required: false }}
+              sx={{
+                input: { color: "white" },
+                label: { color: "white" },
+                "& label.Mui-focused": { color: "white" },
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "white",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "white",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "white",
+                  },
+                },
+                width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 255 }
+              }}
+            />
 
-                <p className='auth-p-end'>
-                <Link className='auth-link' to="/">Iniciar sesión</Link>
-                </p>
-            </form>
-        </div>
-    );
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: {
+                  xs: "column",
+                  sm: "column",
+                  md: "row",
+                  lg: "row",
+                  xl: "row",
+                },
+                alignItems: "center",
+                marginTop: "1rem",
+                gap: 2,
+                width: "100%",
+                justifyContent: "center",
+              }}
+            >
+              <Button
+                type="submit"
+                variant="contained"
+                color="success"
+                disabled={loading}
+                sx={{
+                  fontSize: "1rem",
+                  height: 50,
+                  width: {
+                    xs: "100%",
+                    sm: "100%",
+                    md: "30%",
+                    lg: "25%",
+                    xl: "25%",
+                  },
+                  backgroundColor: "#74c69d",
+                  "&:hover": {
+                    backgroundColor: "#52b788"
+                  }
+                }}
+                disableElevation
+              >
+                {loading ? "Cargando..." : "Registrarme"}
+              </Button>
+              <Button
+                variant="contained"
+                component="a"
+                href="/login"
+                color="primary"
+                sx={{
+                  fontSize: "1rem",
+                  height: 50,
+                  width: {
+                    xs: "100%",
+                    sm: "100%",
+                    md: "30%",
+                    lg: "25%",
+                    xl: "25%",
+                  },
+                  backgroundColor: "#d8f3dc",
+                  "&:hover": {
+                    backgroundColor: "#b7e4c7",
+                    color: "#000"
+                  }
+                }}
+              >Log in
+              </Button>
+            </Box>
+          </Box>
+        </Stack>
+      </Box>
+    </>
+  );
 };
 
 export default Register;

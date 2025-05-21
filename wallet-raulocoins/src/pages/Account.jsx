@@ -90,7 +90,7 @@ const Account = () => {
                 lg: "2rem",
                 xl: "2rem"
               }
-            }}>Hola, {name} bienvenido de vuelta! <i className="fa-regular fa-face-smile"></i></Typography>
+            }}>Hola {name}, bienvenido de vuelta! <i className="fa-regular fa-face-smile"></i></Typography>
             <Typography variant="h4" sx={{
               fontSize: {
                 xs: "1.5rem",
@@ -189,9 +189,9 @@ const Account = () => {
                 '& .MuiAccordionSummary-root:focus-visible': { outline: 'none' }
               }}
             >
-              <AccordionSummary expandIcon={<ArrowDropDownIcon sx={{ color: '#fff' }} />}>
+              <AccordionSummary expandIcon={<ArrowDropDownIcon sx={{ color: '#fff', backgroundColor: tx.type === 'sent' ? '#f44336' : '#4caf50' }} />}>
                 <Typography>
-                  {tx.type === 'sent' ? 'Enviado a' : 'Recibido de'} {tx.toName || tx.fromName}
+                  {tx.type === 'sent' ? `Enviado a ${tx.toName}` : `Recibido de ${tx.fromName}`}
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
