@@ -6,6 +6,7 @@ import Account from "./pages/Account.jsx";
 import Login from "./pages/Login.jsx";
 import VerifyAccount from "./pages/VerifyAccount.jsx";
 import Transferencia from "./pages/transfer.jsx";
+import RecuperacionTotp from "./pages/recuperacionTotp.jsx";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Box } from '@mui/material';
 import "@fontsource/roboto/400.css";
@@ -29,6 +30,7 @@ function App() {
           <Route path="/totp" element={<Totp />} />
           <Route path="/account" element={<Account />} />
           <Route path="/verify-account" element={<VerifyAccount />} />
+          <Route path="/recuperacionTotp" element={<RecuperacionTotp />} />
           <Route path="/transfer" element={<Transferencia />} />
         </Routes>
       </Router>

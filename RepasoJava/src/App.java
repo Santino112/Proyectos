@@ -76,7 +76,48 @@ public class App {
          * for (int i = 0; i < textos.length; i++) {
          * System.out.println(textos[i]);
          * };
-         */
+         
+        //Clase normal
+        Usuario usuario1 = new Usuario("Santino", "Scampone", 22, "santinoscampone1@gmail.com", "Villa Maria");
+        usuario1.saludar();
+        
+        //Clase por herencia
+        Perro perro = new Perro("Todo el mundo", 15, 20.6f, "Perro" );
+        perro.DatosAnimal();
+        perro.info();
+
+        //Polimorfismo por sobrecarga de metodos
+        Operaciones calculo = new Operaciones();
+        int resultado = calculo.sumar(5,5);
+        System.out.println("La suma del calculo1 es: " + resultado);
+
+        Operaciones calculo2 = new Operaciones();
+        int resultado2 = calculo2.sumar(10, 20, 5, 2);
+        System.out.println("La suma del calculo2 es: " + resultado2);
+
+        Operaciones calculo3 = new Operaciones();
+        double resultado3 = calculo3.sumar(3.554, 3.6545); 
+        System.out.println("La suma del calculo3 es: " + resultado3);
+        */
+
+        //Arrays
+        int[] myArray = new int[5];
+        int[] otroArray = new int[5];
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Ingrese los numeros en el array");
+
+        for (int i = 0; i < myArray.length; i++){
+             myArray[i] = scanner.nextInt();
+            System.out.println("El numero " + myArray[i] + " a sido ingresado en la posición " + i);
+        }
+        System.out.println("Finalizado, el array tiene el siguiente contenido: " + Arrays.toString(myArray));
+        Arrays.sort(myArray);
+        Arrays.fill(otroArray, 5);
+        int indiceNumero = Arrays.binarySearch(myArray, 10);
+        System.out.println("El numero 10 esta en la posicion " + indiceNumero);
+        System.out.println(Arrays.toString(myArray));
+        System.out.println(Arrays.toString(otroArray));
 
     }
+
 }

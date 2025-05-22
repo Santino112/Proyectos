@@ -237,7 +237,7 @@ const Login = () => {
                   sm: "100%",
                   md: "30%",
                   lg: "22%",
-                  xl: "25%",
+                  xl: "20%",
                 },
                 backgroundColor: "#74c69d",
                 "&:hover": {
@@ -261,7 +261,7 @@ const Login = () => {
                   sm: "100%",
                   md: "30%",
                   lg: "15%",
-                  xl: "25%",
+                  xl: "15%",
                 },
                 backgroundColor: "#d8f3dc",
                 "&:hover": {
@@ -274,7 +274,7 @@ const Login = () => {
             <Button
               variant="contained"
               component="a"
-              href="/totp"
+              href="/recuperacionTotp"
               color="primary"
               sx={{
                 fontSize: "1rem",
@@ -284,7 +284,7 @@ const Login = () => {
                   sm: "100%",
                   md: "30%",
                   lg: "15%",
-                  xl: "25%",
+                  xl: "15%",
                 },
                 backgroundColor: "#d8f3dc",
                 "&:hover": {
