@@ -4,8 +4,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Stack, Box, Button, TextField, Typography, Autocomplete, Alert } from "@mui/material";
 
 const recuperacionTotp = () => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
+    const [totpSetup, setTotpSetup] = useState(null);
 
     const data = {
         username: username,
@@ -14,12 +16,14 @@ const recuperacionTotp = () => {
 
     const handleRecuperar = async (e) => {
         e.preventDefault();
+        setTotpSetup(null);
 
         try {
             const response = await axios.post("https://raulocoin.onrender.com/api/regenerate-totp", data)
             const res = response.data;
 
             if (res.success) {
+                setTotpSetup(res.totpSetup);
             }
         } catch (error) {
             console.error("Error al obtener el QR:", error);
@@ -43,7 +47,7 @@ const recuperacionTotp = () => {
             }}
         >
             <Stack
-                spacing={7}
+                spacing={4}
                 sx={{
                     width: {
                         xs: "100%",
@@ -56,7 +60,7 @@ const recuperacionTotp = () => {
                         xs: "100%",
                         sm: "100%",
                         md: "auto",
-                        lg: 500,
+                        lg: "auto",
                         xl: 500,
                     },
                     backdropFilter: "blur(5px)",
@@ -67,135 +71,251 @@ const recuperacionTotp = () => {
                     px: { xs: 2, sm: 4 }
                 }}
             >
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        boxShadow: "0 1px 12px rgba(0, 0, 0, 0.39)",
-                        width: "100%",
-                        height: "12%",
-                        textAlign: "center"
-                    }}
-                >
-                    <Typography variant="h2" sx={{
-                        fontSize: {
-                            xs: "1.2rem",
-                            sm: "1.2rem",
-                            md: "1.5rem",
-                            lg: "1.5rem",
-                            xl: "1.8rem"
-                        }
-                    }}>
-                        Ingrese sus datos para regenerar el QR
-                    </Typography>
-                </Box>
-
-                <Box
-                    component="form"
-                    sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        width: "100%",
-                        height: "100%",
-                        gap: 5
-                    }}
-                >
-                    <Box sx={{ width: { xs: "90%", sm: "70%", md: "50%" } }}>
-                        <TextField
-                            label="Alias"
-                            type="text"
-                            variant="outlined"
-                            InputLabelProps={{ required: false }}
-                            required
-                            fullWidth
+                {!totpSetup ? (
+                    <>
+                        <Box
                             sx={{
-                                mb: 3,
-                                input: { color: "white" },
-                                label: { color: "white" },
-                                "& label.Mui-focused": { color: "white" },
-                                "& .MuiOutlinedInput-root": {
-                                    "& fieldset": { borderColor: "white" },
-                                    "&:hover fieldset": { borderColor: "white" },
-                                    "&.Mui-focused fieldset": { borderColor: "white" }
-                                },
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                boxShadow: "0 1px 12px rgba(0, 0, 0, 0.39)",
+                                width: "100%",
+                                height: "12%",
+                                textAlign: "center"
                             }}
-                        />
-
-                        <TextField
-                            label="Email"
-                            type="text"
-                            variant="outlined"
-                            InputLabelProps={{ required: false }}
-                            required
-                            fullWidth
-                            sx={{
-                                mb: 3,
-                                input: { color: "white" },
-                                label: { color: "white" },
-                                "& label.Mui-focused": { color: "white" },
-                                "& .MuiOutlinedInput-root": {
-                                    "& fieldset": { borderColor: "white" },
-                                    "&:hover fieldset": { borderColor: "white" },
-                                    "&.Mui-focused fieldset": { borderColor: "white" }
-                                },
-                            }}
-                        />
-
-                        <Stack
-                            spacing={2}
-                            direction={{ xs: "column", sm: "column", md: "row" }}
-                            sx={{ mt: 2 }}
                         >
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                type="submit"
-                                sx={{
-                                    fontSize: "1rem",
-                                    height: 50,
-                                    width: {
-                                        xs: "100%",
-                                        sm: "100%",
-                                        md: "50%",
-                                        lg: "50%",
-                                        xl: "50%",
+                            <Typography variant="h2" sx={{
+                                fontSize: {
+                                    xs: "1.2rem",
+                                    sm: "1.2rem",
+                                    md: "1.5rem",
+                                    lg: "1.5rem",
+                                    xl: "1.8rem"
+                                }
+                            }}>
+                                Ingrese sus datos para regenerar el QR
+                            </Typography>
+                        </Box>
+
+                        <Box
+                            component="form"
+                            onSubmit={handleRecuperar}
+                            sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                width: "100%",
+                                height: "100%",
+                                gap: 5
+                            }}
+                        >
+                            <Box sx={{ width: { xs: "90%", sm: "70%", md: "50%" } }}>
+                                <TextField
+                                    label="Alias"
+                                    type="text"
+                                    variant="outlined"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    InputLabelProps={{ required: false }}
+                                    required
+                                    fullWidth
+                                    sx={{
+                                        mb: 3,
+                                        input: { color: "white" },
+                                        label: { color: "white" },
+                                        "& label.Mui-focused": { color: "white" },
+                                        "& .MuiOutlinedInput-root": {
+                                            "& fieldset": { borderColor: "white" },
+                                            "&:hover fieldset": { borderColor: "white" },
+                                            "&.Mui-focused fieldset": { borderColor: "white" }
+                                        },
+                                    }}
+                                />
+
+                                <TextField
+                                    label="Email"
+                                    type="text"
+                                    variant="outlined"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    InputLabelProps={{ required: false }}
+                                    required
+                                    fullWidth
+                                    sx={{
+                                        mb: 3,
+                                        input: { color: "white" },
+                                        label: { color: "white" },
+                                        "& label.Mui-focused": { color: "white" },
+                                        "& .MuiOutlinedInput-root": {
+                                            "& fieldset": { borderColor: "white" },
+                                            "&:hover fieldset": { borderColor: "white" },
+                                            "&.Mui-focused fieldset": { borderColor: "white" }
+                                        },
+                                    }}
+                                />
+
+                                <Stack
+                                    spacing={2}
+                                    direction={{ xs: "column", sm: "column", md: "row" }}
+                                    sx={{ mt: 2 }}
+                                >
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        type="submit"
+                                        sx={{
+                                            fontSize: "1rem",
+                                            height: 50,
+                                            width: {
+                                                xs: "100%",
+                                                sm: "100%",
+                                                md: "50%",
+                                                lg: "50%",
+                                                xl: "50%",
+                                            },
+                                            backgroundColor: "#74c69d",
+                                            "&:hover": {
+                                                backgroundColor: "#52b788"
+                                            }
+                                        }}
+                                    >
+                                        Generar
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        component="a"
+                                        href="/login"
+                                        color="primary"
+                                        sx={{
+                                            fontSize: "1rem",
+                                            height: 50,
+                                            width: {
+                                                xs: "100%",
+                                                sm: "100%",
+                                                md: "50%",
+                                                lg: "50%",
+                                                xl: "50%",
+                                            },
+                                            backgroundColor: "#d8f3dc",
+                                            "&:hover": {
+                                                backgroundColor: "#b7e4c7",
+                                                color: "#000"
+                                            }
+                                        }}
+                                    >Log in
+                                    </Button>
+
+                                </Stack>
+                            </Box>
+                        </Box>
+                    </>
+                ) : (
+                    <>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                boxShadow: "0 1px 12px rgba(0, 0, 0, 0.39)",
+                                width: "100%",
+                                height: "12%",
+                                textAlign: "center"
+                            }}
+                        >
+                            <Typography variant="h2" sx={{
+                                fontSize: {
+                                    xs: "1.5rem",
+                                    sm: "1.5rem",
+                                    md: "1.3rem",
+                                    lg: "1.3rem",
+                                    xl: "1.8rem"
+                                }
+                            }}>
+                                Codigo QR generado
+                            </Typography>
+                        </Box>
+
+                        <Box
+                            component="form"
+                            sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                width: "100%",
+                                height: "100%",
+                                gap: 5
+                            }}
+                        >
+                            <Box sx={{ width: { xs: "90%", sm: "70%", md: "50%" } }}>
+                                <Typography variant="h2" sx={{
+                                    fontSize: {
+                                        xs: "1.2rem",
+                                        sm: "1.2rem",
+                                        md: "1.1rem",
+                                        lg: "1.2rem",
+                                        xl: "1.4rem"
                                     },
-                                    backgroundColor: "#74c69d",
-                                    "&:hover": {
-                                        backgroundColor: "#52b788"
-                                    }
-                                }}
-                            >
-                                Generar
-                            </Button>
-                            <Button
-                                variant="contained"
-                                component="a"
-                                href="/login"
-                                color="primary"
-                                sx={{
-                                    fontSize: "1rem",
-                                    height: 50,
-                                    width: {
-                                        xs: "100%",
-                                        sm: "100%",
-                                        md: "50%",
-                                        lg: "50%",
-                                        xl: "50%",
-                                    },
-                                    backgroundColor: "#d8f3dc",
-                                    "&:hover": {
-                                        backgroundColor: "#b7e4c7",
-                                        color: "#000"
-                                    }
-                                }}
-                            >Log in
-                            </Button>
-                        </Stack>
-                    </Box>
-                </Box>
+                                    textAlign: "center",
+                                    marginBottom: "1rem"
+                                }}>
+                                    Escanea este código QR con Google Authenticator o ingresa el código manualmente
+                                </Typography>
+                                <Box
+                                    component="img"
+                                    src={totpSetup.qrCodeUrl}
+                                    alt="TOTP QR Code"
+                                    sx={{
+                                        maxWidth: 500,
+                                        width: "100%",
+                                        height: "auto",
+                                        borderRadius: 2,
+                                        boxShadow: "0 4px 10px rgba(0,0,0,0.15)"
+                                    }}
+                                />
+                                <Stack
+                                    spacing={2}
+                                    direction={{ xs: "column", sm: "column", md: "row" }}
+                                    sx={{ mt: 2 }}
+                                >
+                                    <Typography variant="h2" sx={{
+                                        fontSize: {
+                                            xs: "1.2rem",
+                                            sm: "1.2rem",
+                                            md: "1.1rem",
+                                            lg: "1.2rem",
+                                            xl: "1.4rem"
+                                        },
+                                        textAlign: "center",
+                                        marginBottom: "1rem"
+                                    }}>{totpSetup.manualSetupCode}</Typography>
+                                    <Button
+                                        variant="contained"
+                                        component="a"
+                                        href="/login"
+                                        color="primary"
+                                        sx={{
+                                            fontSize: "1rem",
+                                            height: 50,
+                                            width: {
+                                                xs: "100%",
+                                                sm: "100%",
+                                                md: "100%",
+                                                lg: "100%",
+                                                xl: "100%",
+                                            },
+                                            backgroundColor: "#d8f3dc",
+                                            "&:hover": {
+                                                backgroundColor: "#b7e4c7",
+                                                color: "#000"
+                                            }
+                                        }}
+                                    >Log in
+                                    </Button>
+                                </Stack>
+                            </Box>
+                        </Box>
+                    </>
+                )}
             </Stack>
         </Box >
     )
