@@ -54,20 +54,20 @@ const recuperacionTotp = () => {
                         sm: "100%",
                         md: "60%",
                         lg: "35%",
-                        xl: "32%",
+                        xl: "32%"
                     },
                     height: {
                         xs: "100%",
                         sm: "100%",
                         md: "auto",
                         lg: "auto",
-                        xl: 500,
+                        xl: "auto"
                     },
                     backdropFilter: "blur(5px)",
                     backgroundColor: "rgba(255, 255, 255, 0.10)",
                     boxShadow: "0 1px 12px rgba(25, 25, 25, 0.8)",
                     borderRadius: 2,
-                    py: 8,
+                    py: 6,
                     px: { xs: 2, sm: 4 }
                 }}
             >
@@ -272,11 +272,15 @@ const recuperacionTotp = () => {
                                         boxShadow: "0 4px 10px rgba(0,0,0,0.15)"
                                     }}
                                 />
-                                <Stack
-                                    spacing={2}
-                                    direction={{ xs: "column", sm: "column", md: "row" }}
-                                    sx={{ mt: 2 }}
-                                >
+                                <Box sx={{
+                                    maxWidth: 500,
+                                    width: "100%",
+                                    height: "auto",
+                                    borderRadius: 2,
+                                    boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
+                                    marginTop: "1rem",
+                                    marginBottom: "1rem"
+                                }}>
                                     <Typography variant="h2" sx={{
                                         fontSize: {
                                             xs: "1.2rem",
@@ -286,8 +290,14 @@ const recuperacionTotp = () => {
                                             xl: "1.4rem"
                                         },
                                         textAlign: "center",
-                                        marginBottom: "1rem"
+                                        wordBreak: "break-word"
                                     }}>{totpSetup.manualSetupCode}</Typography>
+                                </Box>
+                                <Stack
+                                    spacing={2}
+                                    direction={{ xs: "column", sm: "column", md: "row" }}
+                                    sx={{ mt: 2 }}
+                                >
                                     <Button
                                         variant="contained"
                                         component="a"

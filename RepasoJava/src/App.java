@@ -101,23 +101,18 @@ public class App {
         */
 
         //Arrays
-        int[] myArray = new int[5];
-        int[] otroArray = new int[5];
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Ingrese los numeros en el array");
+        String[] myArray = {".","X",".",".","X","X",".","X"};
+        int bolsas = 3;
 
         for (int i = 0; i < myArray.length; i++){
-             myArray[i] = scanner.nextInt();
-            System.out.println("El numero " + myArray[i] + " a sido ingresado en la posición " + i);
-        }
-        System.out.println("Finalizado, el array tiene el siguiente contenido: " + Arrays.toString(myArray));
-        Arrays.sort(myArray);
-        Arrays.fill(otroArray, 5);
-        int indiceNumero = Arrays.binarySearch(myArray, 10);
-        System.out.println("El numero 10 esta en la posicion " + indiceNumero);
-        System.out.println(Arrays.toString(myArray));
-        System.out.println(Arrays.toString(otroArray));
-
+            if (myArray[i] == "X" && bolsas <= 3) {
+                bolsas -= 1;
+                System.err.println("Bolsa abierta");
+            } else {
+                System.err.println("No tiene baches");
+            }
+        };
+        
     }
 
 }

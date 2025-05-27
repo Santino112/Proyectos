@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { Stack, Box, Button, TextField, Typography, Input } from '@mui/material';
 
 const VerifyAccount = () => {
     const location = useLocation();
