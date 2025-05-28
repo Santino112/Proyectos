@@ -45,6 +45,7 @@ const VerifyAccount = () => {
             alert('Error al verificar el código TOTP.');
         } finally {
             setLoading(false);
+            setCodigo("");
         }
     };
 
@@ -133,6 +134,7 @@ const VerifyAccount = () => {
                             label="Alias"
                             variant="outlined"
                             value={alias}
+                            disabled
                             onChange={(e) => setAlias(e.target.value)}
                             required
                             InputLabelProps={{ required: false }}

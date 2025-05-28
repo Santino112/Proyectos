@@ -29,6 +29,10 @@ const recuperacionTotp = () => {
             }
         } catch (error) {
             console.error("Error al obtener el QR:", error);
+        } finally {
+            setUsername("");
+            setEmail("");
+            setLoading(false);
         }
     }
 

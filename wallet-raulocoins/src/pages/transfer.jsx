@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
-import { Stack, Box, Button, TextField, Typography, Autocomplete, Alert, Modal,InputAdornment, IconButton} from "@mui/material";
+import { Stack, Box, Button, TextField, Typography, Autocomplete, Alert, Modal, InputAdornment, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const Transferencia = (e) => {
@@ -14,6 +14,7 @@ const Transferencia = (e) => {
     const [severity, setSeverity] = useState("");
     const [mensaje, setMensaje] = useState("");
     const navigate = useNavigate();
+    const [fechaTransferencia, setFechaTransferencia] = useState(null);
     const [open, setOpen] = React.useState(false);
     const [transferData, setTransferData] = useState("");
     const handleOpen = () => setOpen(true);
@@ -47,7 +48,6 @@ const Transferencia = (e) => {
             const res = response.data;
 
             if (res.success) {
-                setOpen(true);
                 const datosTransferencia = {
                     fromUsername: username,
                     toUsername: alias,
@@ -62,10 +62,17 @@ const Transferencia = (e) => {
 
                     if (transferRes.success) {
                         setMensaje(transferRes.message);
-                        setTransferData(username, alias, cantidad, detalle);
+                        setTransferData({
+                            username,
+                            alias,
+                            cantidad,
+                            detalle
+                        });
+                        setFechaTransferencia(new Date());
                         setSeverity("success");
                         setTimeout(() => {
                             setMensaje('');
+                            setOpen(true);
                         }, 5000);
 
                         const datosActuales = JSON.parse(localStorage.getItem("datosLogin"));
@@ -106,6 +113,13 @@ const Transferencia = (e) => {
                 setMensaje('');
             }, 5000);
         }
+        finally {
+            setLoading(false);
+            setAlias("");
+            setCantidad("");
+            setDetalle("");
+            setCodigo("");
+        }
     };
 
     return (
@@ -126,7 +140,7 @@ const Transferencia = (e) => {
             }}
         >
             <Stack
-                spacing={3}
+                spacing={5}
                 sx={{
                     width: {
                         xs: "100%",
@@ -265,7 +279,9 @@ const Transferencia = (e) => {
                             onChange={(e) => setCodigo(e.target.value)}
                             required
                             InputLabelProps={{ required: false }}
+                            fullWidth
                             sx={{
+                                mb: 3,
                                 input: { color: 'white' },
                                 label: { color: 'white' },
                                 '& label.Mui-focused': { color: 'white' },
@@ -273,8 +289,7 @@ const Transferencia = (e) => {
                                     '& fieldset': { borderColor: 'white' },
                                     '&:hover fieldset': { borderColor: 'white' },
                                     '&.Mui-focused fieldset': { borderColor: 'white' },
-                                },
-                                width: { xs: '100%', sm: '100%', md: 250, lg: 250, xl: 255 },
+                                }
                             }}
                             InputProps={{
                                 endAdornment: (
@@ -311,7 +326,6 @@ const Transferencia = (e) => {
                                 variant="contained"
                                 color="primary"
                                 type="submit"
-                                onClick={handleOpen}
                                 disabled={loading}
                                 sx={{
                                     fontSize: "1rem",
@@ -342,16 +356,39 @@ const Transferencia = (e) => {
                         </Stack>
                     </Box>
                 </Box>
-                <div>
+                <Stack spacing={3}
+                    alignItems="center"
+                    sx={{
+                        width: {
+                            xs: "100%",
+                            sm: "100%",
+                            md: "auto",
+                            lg: "auto",
+                            xl: "auto",
+                        },
+                    }}>
                     <Modal
                         open={open}
                         onClose={handleClose}
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                     >
-                        <Box>
+                        <Box sx={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            width: 400,
+                            bgcolor: 'background.paper',
+                            border: '2px solid #000',
+                            boxShadow: 24,
+                            p: 4,
+                            backdropFilter: "blur(20px)",
+                            backgroundColor: "rgba(52, 0, 129, 0.23)",
+                            boxShadow: "0 1px 12px rgba(0, 0, 0, 0)",
+                        }}>
                             <Typography id="modal-modal-title" variant="h6" component="h2">
-                                Recibo de transferencia
+                                Recibo de la transferencia
                             </Typography>
                             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                                 De: {transferData.username}
@@ -366,11 +403,11 @@ const Transferencia = (e) => {
                                 Detalle: {transferData.detalle}
                             </Typography>
                             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                Fecha: {new Date(date).toLocaleString()}
+                                Fecha: {fechaTransferencia ? fechaTransferencia.toLocaleString() : "Cargando"}
                             </Typography>
                         </Box>
                     </Modal>
-                </div>
+                </Stack>
                 {mensaje && (
                     <Alert variant="filled" severity={severity} sx={{ color: "#ffff" }}>
                         {mensaje}
