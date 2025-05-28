@@ -42,12 +42,16 @@ const Totp = () => {
             lg: "auto",
             xl: "auto",
           },
+          backdropFilter: "blur(5px)",
+          backgroundColor: "rgba(52, 0, 129, 0.23)",
+          boxShadow: "0 1px 12px rgba(0, 0, 0, 0)",
+          padding: "2rem"
         }}>
         <Typography
           variant="h1"
           sx={{
             fontSize: {
-              xs: "2.5rem",
+              xs: "2rem",
               sm: "2rem",
               md: "2rem",
               lg: "2rem",
@@ -55,7 +59,7 @@ const Totp = () => {
             },
             textAlign: "center",
           }}
-        >Autenticacion</Typography>
+        >Autenticación</Typography>
         <Typography
           variant="body1"
           sx={{
@@ -67,9 +71,10 @@ const Totp = () => {
               xl: "1.5rem",
             },
             textAlign: "center",
+            wordBreak: "break-word"
           }}
         >
-          Escanea este código QR con tu aplicación de autenticación
+          Escanea este código QR con tu aplicación de autenticación o copia el texto de abajo
         </Typography>
 
         <img className='qr-img' src={totpSetup.qrCodeUrl} alt="TOTP QR Code" style={{ maxWidth: 300 }} />
@@ -102,10 +107,10 @@ const Totp = () => {
             fontSize: "1rem",
             height: 50,
             width: {
-              xs: "60%",
-              sm: "600%",
+              xs: "50%",
+              sm: "60%",
               md: "30%",
-              lg: "15%",
+              lg: "30%",
               xl: "25%",
             },
             backgroundColor: "#d8f3dc",
@@ -114,7 +119,7 @@ const Totp = () => {
               color: "#000"
             }
           }} onClick={() => navigate('/')}>
-          Ingresar
+          Volver al login
         </Button>
       </Stack>
     </Box>

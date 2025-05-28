@@ -247,8 +247,8 @@ const Register = () => {
                     xs: "100%",
                     sm: "100%",
                     md: "30%",
-                    lg: "25%",
-                    xl: "25%",
+                    lg: "20%",
+                    xl: "20%",
                   },
                   backgroundColor: "#d8f3dc",
                   "&:hover": {
@@ -256,7 +256,7 @@ const Register = () => {
                     color: "#000"
                   }
                 }}
-              >Log in
+              >Volver a login
               </Button>
             </Box>
           </Box>

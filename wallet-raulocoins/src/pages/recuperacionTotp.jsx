@@ -8,6 +8,7 @@ const recuperacionTotp = () => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [totpSetup, setTotpSetup] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const data = {
         username: username,
@@ -17,6 +18,7 @@ const recuperacionTotp = () => {
     const handleRecuperar = async (e) => {
         e.preventDefault();
         setTotpSetup(null);
+        setLoading(true);
 
         try {
             const response = await axios.post("https://raulocoin.onrender.com/api/regenerate-totp", data)
@@ -40,7 +42,7 @@ const recuperacionTotp = () => {
                 alignItems: "center",
                 minHeight: "100vh",
                 minWidth: "100vw",
-                backgroundImage: 'url(../public/Images/Inicio.png)',
+                backgroundImage: 'url(../public/Images/Nuevocodigo.png)',
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
@@ -163,6 +165,7 @@ const recuperacionTotp = () => {
                                         variant="contained"
                                         color="primary"
                                         type="submit"
+                                        disabled={loading}
                                         sx={{
                                             fontSize: "1rem",
                                             height: 50,
@@ -179,7 +182,7 @@ const recuperacionTotp = () => {
                                             }
                                         }}
                                     >
-                                        Generar
+                                        {loading ? "Cargando..." : "Generar"}
                                     </Button>
                                     <Button
                                         variant="contained"
@@ -202,7 +205,7 @@ const recuperacionTotp = () => {
                                                 color: "#000"
                                             }
                                         }}
-                                    >Log in
+                                    >Volver
                                     </Button>
 
                                 </Stack>
@@ -319,7 +322,7 @@ const recuperacionTotp = () => {
                                                 color: "#000"
                                             }
                                         }}
-                                    >Log in
+                                    >Volver a login
                                     </Button>
                                 </Stack>
                             </Box>

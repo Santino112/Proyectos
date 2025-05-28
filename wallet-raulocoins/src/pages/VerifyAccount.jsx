@@ -13,30 +13,30 @@ const VerifyAccount = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-      
+
         const data = {
             username: alias,
             totpToken: codigo,
         };
-      
+
         try {
             const verifyResponse = await axios.post('https://raulocoin.onrender.com/api/verify-totp-setup', data);
             const verifyRes = verifyResponse.data;
-        
+
             if (verifyRes.success) {
                 const userResponse = await axios.post('https://raulocoin.onrender.com/api/user-details', data);
                 const userRes = userResponse.data;
-        
+
                 if (userRes.success && userRes.user) {
-                navigate('/account', {
-                    state: {
-                    name: userRes.user.name,
-                    username: userRes.user.username,
-                    balance: userRes.user.balance,
-                    },
-                });
+                    navigate('/account', {
+                        state: {
+                            name: userRes.user.name,
+                            username: userRes.user.username,
+                            balance: userRes.user.balance,
+                        },
+                    });
                 } else {
-                alert('No se pudieron obtener los datos del usuario.');
+                    alert('No se pudieron obtener los datos del usuario.');
                 }
             } else {
                 alert('Código TOTP incorrecto.');
@@ -46,42 +46,209 @@ const VerifyAccount = () => {
         } finally {
             setLoading(false);
         }
-    };      
+    };
 
     return (
-        <div className="login-container">
-        <img
-            alt="raulCoin"
-            className="logo-img"
-        />
-        <h1 className="auth-title">Verifica tu cuenta</h1>
-        <p className="auth-subtitle">¡Es necesario verificar para continuar!</p>
-        <form onSubmit={handleSubmit}>
-            <Input
-            type="text"
-            placeholder="Alias"
-            disabled="disabled"
-            value={alias}
-            onChange={(e) => setAlias(e.target.value)}
-            required
-            className="auth-input"
-            />
-            <Input
-            type="text"
-            placeholder="Código TOTP"
-            value={codigo}
-            onChange={(e) => setCodigo(e.target.value)}
-            required
-            className="auth-input"
-            />
-            <Button type="primary" htmlType="submit" className="auth-button" disabled={loading}>
-            {loading ? 'Cargando...' : 'Verificar'}
-            </Button>
-            <p className="auth-p-end">
-            <Link className="auth-link" to="/">Volver</Link>
-            </p>
-        </form>
-        </div>
+        <>
+            <Box
+                component="section"
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    minHeight: "100vh",
+                    minWidth: "100vw",
+                    backgroundImage: 'url(../public/Images/Verificar.png)',
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                }}
+            >
+                <Stack
+                    spacing={3}
+                    alignItems="center"
+                    sx={{
+                        width: {
+                            xs: "100%",
+                            sm: "100%",
+                            md: "auto",
+                            lg: "auto",
+                            xl: "auto",
+                        },
+                    }}
+                >
+                    <Box>
+                        <Typography
+                            variant="h1"
+                            sx={{
+                                fontSize: {
+                                    xs: "2.5rem",
+                                    sm: "2rem",
+                                    md: "2rem",
+                                    lg: "2rem",
+                                    xl: "2.8rem",
+                                },
+                                textAlign: "center",
+                            }}
+                        >
+                            Verifica tu cuenta
+                        </Typography>
+                        <Typography
+                            variant="body1"
+                            sx={{
+                                fontSize: {
+                                    xs: "1rem",
+                                    sm: "1rem",
+                                    md: "1.2rem",
+                                    lg: "1.5rem",
+                                    xl: "1.5rem",
+                                },
+                                textAlign: "center",
+                            }}
+                        >
+                            ¡Es necesario verificar para continuar!
+                        </Typography>
+                    </Box>
+                    <Box
+                        component="form"
+                        onSubmit={handleSubmit}
+                        sx={{
+                            display: "flex",
+                            flexDirection: {
+                                xs: "column",
+                                sm: "column",
+                                md: "row",
+                                lg: "row",
+                                xl: "row",
+                            },
+                            alignItems: "center",
+                            justifyContent: "center",
+                            flexWrap: "wrap",
+                            gap: 2,
+                        }}
+                    >
+                        <TextField
+                            type="text"
+                            label="Alias"
+                            variant="outlined"
+                            value={alias}
+                            onChange={(e) => setAlias(e.target.value)}
+                            required
+                            InputLabelProps={{ required: false }}
+                            sx={{
+                                input: { color: "white" },
+                                label: { color: "white" },
+                                "& label.Mui-focused": { color: "white" },
+                                "& .MuiOutlinedInput-root": {
+                                    "& fieldset": {
+                                        borderColor: "white",
+                                    },
+                                    "&:hover fieldset": {
+                                        borderColor: "white",
+                                    },
+                                    "&.Mui-focused fieldset": {
+                                        borderColor: "white",
+                                    },
+                                },
+                                width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 255 }
+                            }}
+                        />
+                        <TextField
+                            type="number"
+                            label="Codigo TOTP"
+                            variant="outlined"
+                            value={codigo}
+                            onChange={(e) => setCodigo(e.target.value)}
+                            required
+                            InputLabelProps={{ required: false }}
+                            sx={{
+                                input: { color: "white" },
+                                label: { color: "white" },
+                                "& label.Mui-focused": { color: "white" },
+                                "& .MuiOutlinedInput-root": {
+                                    "& fieldset": {
+                                        borderColor: "white",
+                                    },
+                                    "&:hover fieldset": {
+                                        borderColor: "white",
+                                    },
+                                    "&.Mui-focused fieldset": {
+                                        borderColor: "white",
+                                    },
+                                },
+                                width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 255 }
+                            }}
+                        />
+                        <Box
+                            sx={{
+                                display: "flex",
+                                flexDirection: {
+                                    xs: "column",
+                                    sm: "column",
+                                    md: "row",
+                                    lg: "row",
+                                    xl: "row",
+                                },
+                                alignItems: "center",
+                                marginTop: "1rem",
+                                gap: 2,
+                                width: "100%",
+                                justifyContent: "center",
+                            }}
+                        >
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="success"
+                                disabled={loading}
+                                sx={{
+                                    fontSize: "1rem",
+                                    height: 50,
+                                    width: {
+                                        xs: "100%",
+                                        sm: "100%",
+                                        md: "30%",
+                                        lg: "25%",
+                                        xl: "25%",
+                                    },
+                                    backgroundColor: "#74c69d",
+                                    "&:hover": {
+                                        backgroundColor: "#52b788"
+                                    }
+                                }}
+                                disableElevation
+                            >
+                                {loading ? "Cargando..." : "Verificar"}
+                            </Button>
+                            <Button
+                                variant="contained"
+                                component="a"
+                                href="/login"
+                                color="primary"
+                                sx={{
+                                    fontSize: "1rem",
+                                    height: 50,
+                                    width: {
+                                        xs: "100%",
+                                        sm: "100%",
+                                        md: "30%",
+                                        lg: "20%",
+                                        xl: "20%",
+                                    },
+                                    backgroundColor: "#d8f3dc",
+                                    "&:hover": {
+                                        backgroundColor: "#b7e4c7",
+                                        color: "#000"
+                                    }
+                                }}
+                            > Volver a login
+                            </Button>
+                        </Box>
+                    </Box>
+                </Stack>
+            </Box>
+        </>
     );
 };
 

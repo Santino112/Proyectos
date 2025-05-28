@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { Stack, Box, Button, TextField, Typography } from '@mui/material';
+import { Stack, Box, Button, TextField, Typography, InputAdornment, IconButton } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [alias, setAlias] = useState('');
   const [codigo, setCodigo] = useState('');
+  const [showCodigo, setShowCodigo] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const handleToggleShowCodigo = () => {
+    setShowCodigo((prev) => !prev);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -184,26 +190,46 @@ const Login = () => {
           <TextField
             label="Código"
             variant="outlined"
+            type={showCodigo ? 'number' : 'password'}
             value={codigo}
             onChange={(e) => setCodigo(e.target.value)}
             required
             InputLabelProps={{ required: false }}
             sx={{
-              input: { color: "white" },
-              label: { color: "white" },
-              "& label.Mui-focused": { color: "white" },
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "white",
-                },
-                "&:hover fieldset": {
-                  borderColor: "white",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "white",
-                },
+              input: { color: 'white' },
+              label: { color: 'white' },
+              '& label.Mui-focused': { color: 'white' },
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': { borderColor: 'white' },
+                '&:hover fieldset': { borderColor: 'white' },
+                '&.Mui-focused fieldset': { borderColor: 'white' },
               },
-              width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 255 }
+              width: { xs: '100%', sm: '100%', md: 250, lg: 250, xl: 255 },
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={handleToggleShowCodigo}
+                    edge="end"
+                    sx={{ 
+                      color: "#ffff",
+                      outline: "focus",
+                      boxShadow: "none",
+                      "&:focus":{
+                        outline: "none",
+                        boxShadow: "none"
+                      },
+                      "&:focus-visible": {
+                        outline: "none",
+                        boxShadow: "none"
+                      }
+                    }}
+                  >
+                    {showCodigo ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
             }}
           />
 

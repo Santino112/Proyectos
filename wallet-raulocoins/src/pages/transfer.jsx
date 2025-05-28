@@ -1,21 +1,33 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
-import { Stack, Box, Button, TextField, Typography, Autocomplete, Alert } from "@mui/material";
+import { Stack, Box, Button, TextField, Typography, Autocomplete, Alert, Modal,InputAdornment, IconButton} from "@mui/material";
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const Transferencia = (e) => {
+    const [loading, setLoading] = useState(false);
     const [alias, setAlias] = useState("");
     const [cantidad, setCantidad] = useState("");
     const [detalle, setDetalle] = useState("");
     const [codigo, setCodigo] = useState("");
+    const [showCodigo, setShowCodigo] = useState(false);
     const [severity, setSeverity] = useState("");
     const [mensaje, setMensaje] = useState("");
     const navigate = useNavigate();
+    const [open, setOpen] = React.useState(false);
+    const [transferData, setTransferData] = useState("");
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const AliasUsuarios = ["alejo.daloia", "barbimol", "SamirFrascarelli.alias", "tobias.rc.alias", "Fransay.alias", "misaSSJ", "FabriRuma912", "anto.p", "Agus", "guada", "jogani", "virpedraza47", "Loki", "lupigliacampi", "maxibergese", "facundogrosso", "sqlenjoyer.alias", "santiagolazos", "otakuemo", "jgp.raulo", "dam", "JulietaGonella.alias"];
+
 
     const { name, username } = JSON.parse(
         localStorage.getItem("datosLogin")
     );
+
+    const handleToggleShowCodigo = () => {
+        setShowCodigo((prev) => !prev);
+    };
 
     const Account = () => {
         navigate("/Account");
@@ -23,81 +35,76 @@ const Transferencia = (e) => {
 
     const transferencia = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
         const datosVerify = {
             username,
             totpToken: codigo
-        }
-
-        const response = await axios.post("https://raulocoin.onrender.com/api/verify-totp", datosVerify);
-        const res = response.data;
+        };
 
         try {
+            const response = await axios.post("https://raulocoin.onrender.com/api/verify-totp", datosVerify);
+            const res = response.data;
+
             if (res.success) {
+                setOpen(true);
                 const datosTransferencia = {
                     fromUsername: username,
                     toUsername: alias,
                     amount: cantidad,
                     description: detalle,
                     operationToken: datosVerify.totpToken
-                }
+                };
 
                 try {
-                    const response = await axios.post("https://raulocoin.onrender.com/api/transfer", datosTransferencia);
-                    const res = response.data;
+                    const transferResponse = await axios.post("https://raulocoin.onrender.com/api/transfer", datosTransferencia);
+                    const transferRes = transferResponse.data;
 
-                    console.log("Respuesta completa:", response.sex);
-                    console.log("Datos recibidos:", res);
-                    if (res.success) {
-                        setMensaje(res.message);
+                    if (transferRes.success) {
+                        setMensaje(transferRes.message);
+                        setTransferData(username, alias, cantidad, detalle);
                         setSeverity("success");
                         setTimeout(() => {
                             setMensaje('');
                         }, 5000);
-                        const datosActuales = JSON.parse(
-                            localStorage.getItem("datosLogin")
-                        );
 
-                        const nuevoBalance = res.transfer.from.newBalance;
+                        const datosActuales = JSON.parse(localStorage.getItem("datosLogin"));
+                        const nuevoBalance = transferRes.transfer.from.newBalance;
 
                         const nuevosDatos = {
                             ...datosActuales,
                             balance: nuevoBalance,
-                            token: JSON.parse(localStorage.getItem("datosLogin")).token
+                            token: datosActuales.token
                         };
 
                         localStorage.setItem("datosLogin", JSON.stringify(nuevosDatos));
+                    } else {
+                        setMensaje(transferRes.message || "Error en la transferencia.");
+                        setSeverity("error");
+                        setTimeout(() => {
+                            setMensaje('');
+                        }, 5000);
                     }
                 } catch (error) {
-                    if (error.response && error.response.data && error.response.data.message) {
-                        setMensaje(res.message);
-                        setSeverity("error");
-                        setTimeout(() => {
-                            setMensaje('');
-                        }, 5000);
-                    } else {
-                        setMensaje("Error desconocido al hacer la transferencia:", error);
-                        setSeverity("error");
-                        setTimeout(() => {
-                            setMensaje('');
-                        }, 5000);
-                    }
+                    setMensaje(error.response?.data?.message || "Error desconocido al hacer la transferencia.");
+                    setSeverity("error");
+                    setTimeout(() => {
+                        setMensaje('');
+                    }, 5000);
                 }
+            } else {
+                setMensaje(res.message || "Error en la verificación del TOTP.");
+                setSeverity("error");
+                setTimeout(() => {
+                    setMensaje('');
+                }, 5000);
             }
         } catch (error) {
-            if (error.response && error.response.data && error.response.data.message) {
-                setMensaje("Error desconocido al hacer la transferencia:", error);
-                setSeverity("error");
-                setTimeout(() => {
-                    setMensaje('');
-                }, 5000);
-            } else {
-                setMensaje("Error desconocido al hacer la transferencia:", error);
-                setSeverity("error");
-                setTimeout(() => {
-                    setMensaje('');
-                }, 5000);
-            }
+            setMensaje(error.response?.data?.message || "Error desconocido al verificar el TOTP.");
+            setSeverity("error");
+            setTimeout(() => {
+                setMensaje('');
+            }, 5000);
         }
     };
 
@@ -199,7 +206,7 @@ const Transferencia = (e) => {
                                 <TextField
                                     {...params}
                                     label="Alias"
-                                    variant="standard"
+                                    variant="outlined"
                                     required
                                     InputLabelProps={{ required: false }}
                                     fullWidth
@@ -210,7 +217,7 @@ const Transferencia = (e) => {
                         <TextField
                             label="Cantidad"
                             type="number"
-                            variant="standard"
+                            variant="outlined"
                             value={cantidad}
                             onChange={(e) => setCantidad(e.target.value)}
                             InputLabelProps={{ required: false }}
@@ -232,7 +239,7 @@ const Transferencia = (e) => {
                         <TextField
                             label="Detalle"
                             type="text"
-                            variant="standard"
+                            variant="outlined"
                             value={detalle}
                             onChange={(e) => setDetalle(e.target.value)}
                             InputLabelProps={{ required: false }}
@@ -250,28 +257,51 @@ const Transferencia = (e) => {
                                 },
                             }}
                         />
-
                         <TextField
-                            label="TOTP"
-                            type="text"
-                            variant="standard"
+                            label="Código"
+                            variant="outlined"
+                            type={showCodigo ? 'number' : 'password'}
                             value={codigo}
                             onChange={(e) => setCodigo(e.target.value)}
-                            InputLabelProps={{ required: false }}
                             required
-                            fullWidth
+                            InputLabelProps={{ required: false }}
                             sx={{
-                                mb: 3,
-                                input: { color: "white" },
-                                label: { color: "white" },
-                                "& label.Mui-focused": { color: "white" },
-                                "& .MuiOutlinedInput-root": {
-                                    "& fieldset": { borderColor: "white" },
-                                    "&:hover fieldset": { borderColor: "white" }
+                                input: { color: 'white' },
+                                label: { color: 'white' },
+                                '& label.Mui-focused': { color: 'white' },
+                                '& .MuiOutlinedInput-root': {
+                                    '& fieldset': { borderColor: 'white' },
+                                    '&:hover fieldset': { borderColor: 'white' },
+                                    '&.Mui-focused fieldset': { borderColor: 'white' },
                                 },
+                                width: { xs: '100%', sm: '100%', md: 250, lg: 250, xl: 255 },
+                            }}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            onClick={handleToggleShowCodigo}
+                                            edge="end"
+                                            sx={{
+                                                color: "#ffff",
+                                                outline: "focus",
+                                                boxShadow: "none",
+                                                "&:focus": {
+                                                    outline: "none",
+                                                    boxShadow: "none"
+                                                },
+                                                "&:focus-visible": {
+                                                    outline: "none",
+                                                    boxShadow: "none"
+                                                }
+                                            }}
+                                        >
+                                            {showCodigo ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
                             }}
                         />
-
                         <Stack
                             spacing={2}
                             direction={{ xs: "column", sm: "column", md: "row" }}
@@ -281,6 +311,8 @@ const Transferencia = (e) => {
                                 variant="contained"
                                 color="primary"
                                 type="submit"
+                                onClick={handleOpen}
+                                disabled={loading}
                                 sx={{
                                     fontSize: "1rem",
                                     width: "100%",
@@ -290,7 +322,7 @@ const Transferencia = (e) => {
                                     }
                                 }}
                             >
-                                Transferir
+                                {loading ? "Cargando..." : "Transferir"}
                             </Button>
                             <Button
                                 variant="contained"
@@ -310,8 +342,37 @@ const Transferencia = (e) => {
                         </Stack>
                     </Box>
                 </Box>
+                <div>
+                    <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Box>
+                            <Typography id="modal-modal-title" variant="h6" component="h2">
+                                Recibo de transferencia
+                            </Typography>
+                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                De: {transferData.username}
+                            </Typography>
+                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                Para: {transferData.alias}
+                            </Typography>
+                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                Cantidad: {transferData.cantidad}
+                            </Typography>
+                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                Detalle: {transferData.detalle}
+                            </Typography>
+                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                Fecha: {new Date(date).toLocaleString()}
+                            </Typography>
+                        </Box>
+                    </Modal>
+                </div>
                 {mensaje && (
-                    <Alert variant="filled" severity={severity}>
+                    <Alert variant="filled" severity={severity} sx={{ color: "#ffff" }}>
                         {mensaje}
                     </Alert>
                 )}
